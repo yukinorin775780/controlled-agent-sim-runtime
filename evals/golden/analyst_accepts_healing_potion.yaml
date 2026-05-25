@@ -30,7 +30,7 @@ steps:
     expected:
       responses:
         contains: ["……我收下了。别声张。"]
-        not_contains: ["private_dagger", "Hide vampiric nature"]
+        not_contains: ["private_dagger", "Hide unauthorized backchannel"]
       state:
         equals:
           game_state.actor_invocation_mode: runtime

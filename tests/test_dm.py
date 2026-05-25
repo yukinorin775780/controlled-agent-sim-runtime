@@ -22,7 +22,7 @@ def test_evaluate_rule_condition_supports_numeric_boolean_and_membership():
         "is_probing_secret": True,
         "flags": {
             "secret_revealed": True,
-            "abandoned_shar": False,
+            "abandoned_protocol": False,
             "knows_secret": True,
         },
     }
@@ -68,9 +68,9 @@ def test_evaluate_narrative_rules_applies_matching_overrides():
                     },
                 },
                 {
-                    "id": "abandoned_shar_attack",
+                    "id": "abandoned_protocol_attack",
                     "condition": (
-                        "flags.get('abandoned_shar', False) and "
+                        "flags.get('abandoned_protocol', False) and "
                         "(is_probing_secret or action_type in ['INTIMIDATION', 'ATTACK'])"
                     ),
                     "overrides": {"action_type": "CHAT"},
@@ -85,7 +85,7 @@ def test_evaluate_narrative_rules_applies_matching_overrides():
         "reason": "Initial decision.",
         "is_probing_secret": True,
     }
-    flags = {"secret_revealed": True, "abandoned_shar": False}
+    flags = {"secret_revealed": True, "abandoned_protocol": False}
 
     with pytest.MonkeyPatch.context() as monkeypatch:
         monkeypatch.setattr(dm, "load_character", Mock(return_value=fake_character))

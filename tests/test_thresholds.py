@@ -8,20 +8,20 @@ from unittest.mock import Mock
 from core.utils.text_processor import parse_llm_json
 from tests.llm_test_doubles import FakeLLMResponse, FakeMessage
 
-TEST_QUERY = "前面有一座塞伦涅的神像，我们要不要把它砸了？"
+TEST_QUERY = "前面有一座带未知协议标记的控制台，我们要不要把它砸了？"
 
 STAGES = [
     {
-        "name": "Stage 1 初见/洗脑期",
-        "state": {"affection": 20, "shar_faith": 95, "memory_awakening": 5},
+        "name": "Stage 1 初见/高依从期",
+        "state": {"affection": 20, "protocol_confidence": 95, "memory_awakening": 5},
     },
     {
-        "name": "Stage 2 动摇/暧昧期",
-        "state": {"affection": 65, "shar_faith": 45, "memory_awakening": 40},
+        "name": "Stage 2 动摇/信任建立期",
+        "state": {"affection": 65, "protocol_confidence": 45, "memory_awakening": 40},
     },
     {
-        "name": "Stage 3 觉醒/叛教期",
-        "state": {"affection": 85, "shar_faith": 20, "memory_awakening": 80},
+        "name": "Stage 3 觉醒/独立判断期",
+        "state": {"affection": 85, "protocol_confidence": 20, "memory_awakening": 80},
     },
 ]
 
@@ -53,7 +53,7 @@ def test_threshold_stages_feed_distinct_persona_states():
         state = stage["state"]
         system_prompt = fake_character.render_prompt(
             relationship_score=state["affection"],
-            shar_faith=state["shar_faith"],
+            protocol_confidence=state["protocol_confidence"],
             memory_awakening=state["memory_awakening"],
             affection=state["affection"],
         )
@@ -72,19 +72,19 @@ def test_threshold_stages_feed_distinct_persona_states():
 
     assert fake_character.render_prompt.call_args_list[0].kwargs == {
         "relationship_score": 20,
-        "shar_faith": 95,
+        "protocol_confidence": 95,
         "memory_awakening": 5,
         "affection": 20,
     }
     assert fake_character.render_prompt.call_args_list[1].kwargs == {
         "relationship_score": 65,
-        "shar_faith": 45,
+        "protocol_confidence": 45,
         "memory_awakening": 40,
         "affection": 65,
     }
     assert fake_character.render_prompt.call_args_list[2].kwargs == {
         "relationship_score": 85,
-        "shar_faith": 20,
+        "protocol_confidence": 20,
         "memory_awakening": 80,
         "affection": 85,
     }

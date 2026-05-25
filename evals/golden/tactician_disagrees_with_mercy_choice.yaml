@@ -36,7 +36,7 @@ steps:
             text: 仁慈不是罪，但你要承担后果。
           - speaker: scout
             text: 真意外，你今天居然选了仁慈。
-        not_contains: ["Protect the artifact.", "Hide vampiric nature."]
+        not_contains: ["Protect the artifact.", "Hide unauthorized backchannel."]
       state:
         equals:
           game_state.actor_invocation_mode: runtime

@@ -172,7 +172,7 @@ def test_parse_and_apply_actions_updates_state_and_executes_physical_action():
         "analyst": {
             "affection": 10,
             "inventory": {},
-            "shar_faith": 60,
+            "protocol_confidence": 60,
             "memory_awakening": 20,
         }
     }
@@ -185,7 +185,7 @@ def test_parse_and_apply_actions_updates_state_and_executes_physical_action():
       "internal_monologue": "她开始动摇。",
       "state_changes": {
         "affection_delta": 5,
-        "shar_faith_delta": -10,
+        "protocol_confidence_delta": -10,
         "memory_awakening_delta": 15
       },
       "physical_action": {
@@ -216,7 +216,7 @@ def test_parse_and_apply_actions_updates_state_and_executes_physical_action():
     assert result["tool_physics_events"] == ["healing_potion consumed"]
     assert result["state_changes_applied"] is True
     assert current_entities["analyst"]["affection"] == 15
-    assert current_entities["analyst"]["shar_faith"] == 50
+    assert current_entities["analyst"]["protocol_confidence"] == 50
     assert current_entities["analyst"]["memory_awakening"] == 35
 
 

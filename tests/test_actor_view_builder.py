@@ -107,7 +107,7 @@ def make_sample_state():
                 "status": "alive",
                 "faction": "party",
                 "dynamic_states": {
-                    "shar_faith": {"current_value": 80},
+                    "protocol_confidence": {"current_value": 80},
                     "memory_awakening": {"current_value": 20},
                 },
                 "secret_objective": "Protect the artifact.",
@@ -123,9 +123,9 @@ def make_sample_state():
                 "status": "alive",
                 "faction": "party",
                 "dynamic_states": {
-                    "vampiric_hunger": {"current_value": 85},
+                    "autonomy_pressure": {"current_value": 85},
                 },
-                "secret_objective": "Hide vampiric nature.",
+                "secret_objective": "Hide unauthorized backchannel.",
             },
         },
     }
@@ -154,7 +154,7 @@ def test_build_actor_view_returns_contract_shape():
     assert actor_view.self_state.inventory == {"healing_potion": 1, "torch": 1}
     assert actor_view.self_state.affection == 55
     assert actor_view.self_state.dynamic_states == {
-        "shar_faith": 80,
+        "protocol_confidence": 80,
         "memory_awakening": 20,
     }
 

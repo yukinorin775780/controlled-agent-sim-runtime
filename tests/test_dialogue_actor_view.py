@@ -103,5 +103,5 @@ def test_build_dialogue_prompt_does_not_leak_peer_private_inventory():
     assert "Scout(scout)" in prompt
     # peer private state should never appear in hostile prompt
     assert "healing_potion" not in prompt
-    assert "secret_objective\": \"Hide vampiric nature" not in prompt
+    assert "secret_objective\": \"Hide unauthorized backchannel" not in prompt
 

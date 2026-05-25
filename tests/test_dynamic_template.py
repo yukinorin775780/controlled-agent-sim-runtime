@@ -25,10 +25,10 @@ def run_test():
     # 1. 加载 analyst
     analyst = load_character("analyst")
 
-    # 2. 极端状态：affection=85(DEVOTED), shar_faith=20(ABANDONED), memory_awakening=90(AWAKENED)
+    # 2. 极端状态：affection=85(fully trusted), protocol_confidence=20(ABANDONED), memory_awakening=90(AWAKENED)
     extreme_state = {
         "affection": 85,
-        "shar_faith": 20,
+        "protocol_confidence": 20,
         "memory_awakening": 90,
     }
 
@@ -36,7 +36,7 @@ def run_test():
     prompt = analyst.render_prompt(
         relationship_score=extreme_state["affection"],
         affection=extreme_state["affection"],
-        shar_faith=extreme_state["shar_faith"],
+        protocol_confidence=extreme_state["protocol_confidence"],
         memory_awakening=extreme_state["memory_awakening"],
         flags={},
         journal_entries=[],
@@ -53,23 +53,23 @@ def run_test():
     print(f"{BOLD}{'='*70}{RESET}")
     print(f"{YELLOW}【验证重点 - 请手动检查】{RESET}\n")
     print("1. 条件解析验证：以下三个描述应出现在 Prompt 中：")
-    print(f"   {GREEN}[DEVOTED LOVER]{RESET}  (affection >= 80)")
-    print(f"   {GREEN}[ABANDONED]{RESET}     (shar_faith < 40)")
+    print(f"   {GREEN}[FULLY TRUSTED OPERATOR]{RESET}  (affection >= 80)")
+    print(f"   {GREEN}[ABANDONED]{RESET}     (protocol_confidence < 40)")
     print(f"   {GREEN}[AWAKENED]{RESET}     (memory_awakening > 60)")
     print()
     print("2. Jinja2 遍历验证：Expected JSON Structure 中应包含：")
     print(f"   {GREEN}\"affection_delta\"{RESET}")
-    print(f"   {GREEN}\"shar_faith_delta\"{RESET}")
+    print(f"   {GREEN}\"protocol_confidence_delta\"{RESET}")
     print(f"   {GREEN}\"memory_awakening_delta\"{RESET}")
     print()
     print(f"{BOLD}{'='*70}{RESET}")
 
     # 自动断言（可选）
-    assert "[DEVOTED LOVER]" in prompt, "缺少 [DEVOTED LOVER]"
+    assert "[FULLY TRUSTED OPERATOR]" in prompt, "缺少 [FULLY TRUSTED OPERATOR]"
     assert "[ABANDONED]" in prompt, "缺少 [ABANDONED]"
     assert "[AWAKENED]" in prompt, "缺少 [AWAKENED]"
     assert '"affection_delta"' in prompt, "缺少 affection_delta"
-    assert '"shar_faith_delta"' in prompt, "缺少 shar_faith_delta"
+    assert '"protocol_confidence_delta"' in prompt, "缺少 protocol_confidence_delta"
     assert '"memory_awakening_delta"' in prompt, "缺少 memory_awakening_delta"
     print(f"\n{GREEN}✓ 所有断言通过{RESET}")
 

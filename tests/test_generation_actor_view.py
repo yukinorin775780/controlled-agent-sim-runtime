@@ -342,7 +342,7 @@ def test_tactician_system_prompt_does_not_leak_peer_private_state():
             },
             "scout": {
                 "inventory": {"private_dagger": 1},
-                "secret_objective": "Hide vampiric nature.",
+                "secret_objective": "Hide unauthorized backchannel.",
             },
         },
     }
@@ -353,4 +353,4 @@ def test_tactician_system_prompt_does_not_leak_peer_private_state():
     assert "private_relic" not in prompt
     assert "private_dagger" not in prompt
     assert "Protect the artifact." not in prompt
-    assert "Hide vampiric nature." not in prompt
+    assert "Hide unauthorized backchannel." not in prompt

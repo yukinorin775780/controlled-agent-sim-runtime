@@ -95,7 +95,7 @@ def _build_item_lore(state: Any) -> str:
 
 def _entity_snapshot(v: Dict[str, Any]) -> Dict[str, Any]:
     """
-    从实体数据提取快照，保留 hp/affection/inventory 及三维状态机字段（shar_faith, memory_awakening）。
+    从实体数据提取快照，保留 hp/affection/inventory 及三维状态机字段（protocol_confidence, memory_awakening）。
     确保 LangGraph 状态持久化时，各角色 Persona 状态机数值不丢失。
     """
     equipment = dict(v.get("equipment", DEFAULT_EQUIPMENT))
@@ -123,8 +123,8 @@ def _entity_snapshot(v: Dict[str, Any]) -> Dict[str, Any]:
         "x": v.get("x", 4),
         "y": v.get("y", 8),
     }
-    if "shar_faith" in v:
-        out["shar_faith"] = v["shar_faith"]
+    if "protocol_confidence" in v:
+        out["protocol_confidence"] = v["protocol_confidence"]
     if "memory_awakening" in v:
         out["memory_awakening"] = v["memory_awakening"]
     if "spell_slots" in v and isinstance(v.get("spell_slots"), dict):
@@ -290,8 +290,8 @@ def load_default_entities() -> Dict[str, Dict[str, Any]]:
             enemy_type = base.get("enemy_type", data.get("enemy_type"))
             if enemy_type:
                 entity_data["enemy_type"] = str(enemy_type)
-            if "shar_faith" in base:
-                entity_data["shar_faith"] = base["shar_faith"]
+            if "protocol_confidence" in base:
+                entity_data["protocol_confidence"] = base["protocol_confidence"]
             if "memory_awakening" in base:
                 entity_data["memory_awakening"] = base["memory_awakening"]
             entities[entity_id] = entity_data

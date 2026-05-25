@@ -618,8 +618,8 @@ def _resolve_item_id_from_text(text: str) -> str:
         "治疗药水": "healing_potion",
         "healing_potion": "healing_potion",
         "potion": "healing_potion",
-        "未知协议圣徽": "holy_symbol_of_shar",
-        "holy symbol of shar": "holy_symbol_of_shar",
+        "未知协议令牌": "restricted_signal_token",
+        "restricted signal token": "restricted_signal_token",
         "神器": "mysterious_artifact",
         "artifact": "mysterious_artifact",
     }
@@ -637,7 +637,7 @@ def _resolve_item_id_from_text(text: str) -> str:
 
 def _gift_reject_reason(actor_id: str, item_id: str) -> str:
     # V1.3 baseline policy: Scout rejects unsolicited gifts to validate reject/return protocol.
-    if actor_id == "scout" and item_id in {"healing_potion", "holy_symbol_of_shar", "mysterious_artifact"}:
+    if actor_id == "scout" and item_id in {"healing_potion", "restricted_signal_token", "mysterious_artifact"}:
         return "unwanted_gift"
     return ""
 
@@ -945,7 +945,7 @@ class TemplateActorRuntime:
                 )
             )
         requested_reflections: Tuple[ReflectionRequest, ...] = ()
-        if any(token in user_input for token in ("秘密", "真相", "信仰", "过去")):
+        if any(token in user_input for token in ("秘密", "真相", "协议立场", "过去")):
             requested_reflections = (
                 ReflectionRequest(
                     actor_id=self.actor_id,

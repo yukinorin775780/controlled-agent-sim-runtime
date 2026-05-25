@@ -7734,7 +7734,7 @@ def calculate_relationship_modifier(relationship: int, action_type: str) -> int:
 #
 # 【问题】若将 PROBE_SECRET 混入 action_type，会出现维度冲突：
 # - 玩家「用劝说口吻刺探神器」→ PERSUASION 还是 PROBE_SECRET？LLM 难以二选一。
-# - 玩家「边撒谎边问未知协议信仰」→ DECEPTION 与刺探话题同时成立，单维分类必然丢失信息。
+# - 玩家「边撒谎边问未知协议立场」→ DECEPTION 与刺探话题同时成立，单维分类必然丢失信息。
 #
 # 【方案】action_type 保持纯粹的机制动作（How：如何互动），is_probing_secret 独立表示
 # 话题标签（What：是否触碰核心隐私）。两者正交，LLM 可同时输出：

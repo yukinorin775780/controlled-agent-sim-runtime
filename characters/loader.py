@@ -397,7 +397,7 @@ class Character:
         time_of_day: str = "晨曦 (Morning)",
         hp: int = 20,
         active_buffs: Optional[List[dict]] = None,
-        shar_faith: Optional[int] = None,
+        protocol_confidence: Optional[int] = None,
         memory_awakening: Optional[int] = None,
         affection: Optional[int] = None,
     ) -> str:
@@ -446,7 +446,7 @@ class Character:
             time_of_day=time_of_day,
             hp=hp,
             active_buffs=active_buffs,
-            shar_faith=shar_faith,
+            protocol_confidence=protocol_confidence,
             memory_awakening=memory_awakening,
             affection=affection,
         )

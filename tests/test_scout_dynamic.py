@@ -26,17 +26,15 @@ def run_test():
     scout = load_character("scout")
 
     # 2. Mock 极端状态（触发最高档规则）
-    #    affection >= 80 -> [DEVOTED LOVER]
-    #    vampiric_hunger >= 80 -> [STARVING]
-    #    ascension_desire > 60 -> [POWER HUNGRY]
+    #    affection >= 60 -> [TRUSTED OPERATOR]
+    #    autonomy_pressure >= 70 -> [RESISTANT]
     extreme_state = {
         "affection": 85,
-        "vampiric_hunger": 90,
-        "ascension_desire": 80,
+        "autonomy_pressure": 90,
     }
 
     # 3. 调用底层 render_prompt，以便传入侦察员专属 dynamic_states 键
-    #    （Character.render_prompt 当前未暴露 vampiric_hunger / ascension_desire）
+    #    （Character.render_prompt 当前未暴露 autonomy_pressure）
     attrs = scout.data.copy()
     attrs["relationship"] = extreme_state["affection"]
 
@@ -53,8 +51,7 @@ def run_test():
         active_buffs=[],
         relationship_score=extreme_state["affection"],
         affection=extreme_state["affection"],
-        vampiric_hunger=extreme_state["vampiric_hunger"],
-        ascension_desire=extreme_state["ascension_desire"],
+        autonomy_pressure=extreme_state["autonomy_pressure"],
     )
 
     # 4. 高亮打印完整 Prompt
@@ -65,25 +62,21 @@ def run_test():
     # 5. 验证重点提示（侦察员专属）
     print(f"{BOLD}{'='*70}{RESET}")
     print(f"{YELLOW}【验证重点 - 请手动检查（侦察员）】{RESET}\n")
-    print("1. 条件解析：以下三个极端心理状态标签应出现在 Prompt 中：")
-    print(f"   {GREEN}[DEVOTED LOVER]{RESET}  (affection >= 80)")
-    print(f"   {GREEN}[STARVING]{RESET}        (vampiric_hunger >= 80)")
-    print(f"   {GREEN}[POWER HUNGRY]{RESET}    (ascension_desire > 60)")
+    print("1. 条件解析：以下两个极端心理状态标签应出现在 Prompt 中：")
+    print(f"   {GREEN}[TRUSTED OPERATOR]{RESET}  (affection >= 60)")
+    print(f"   {GREEN}[RESISTANT]{RESET}        (autonomy_pressure >= 70)")
     print()
     print("2. Jinja2 遍历：Expected JSON Structure 中应包含：")
     print(f"   {GREEN}\"affection_delta\"{RESET}")
-    print(f"   {GREEN}\"vampiric_hunger_delta\"{RESET}")
-    print(f"   {GREEN}\"ascension_desire_delta\"{RESET}")
+    print(f"   {GREEN}\"autonomy_pressure_delta\"{RESET}")
     print()
     print(f"{BOLD}{'='*70}{RESET}")
 
     # 自动断言
-    assert "[DEVOTED LOVER]" in prompt, "缺少 [DEVOTED LOVER]"
-    assert "[STARVING]" in prompt, "缺少 [STARVING]"
-    assert "[POWER HUNGRY]" in prompt, "缺少 [POWER HUNGRY]"
+    assert "[TRUSTED OPERATOR]" in prompt, "缺少 [TRUSTED OPERATOR]"
+    assert "[RESISTANT]" in prompt, "缺少 [RESISTANT]"
     assert '"affection_delta"' in prompt, "缺少 affection_delta"
-    assert '"vampiric_hunger_delta"' in prompt, "缺少 vampiric_hunger_delta"
-    assert '"ascension_desire_delta"' in prompt, "缺少 ascension_desire_delta"
+    assert '"autonomy_pressure_delta"' in prompt, "缺少 autonomy_pressure_delta"
     print(f"\n{GREEN}✓ 所有断言通过{RESET}")
 
 

@@ -1301,7 +1301,7 @@ def test_p0_gatekeeper_render_prompt_succeeds():
         time_of_day="晨曦",
         hp=18,
         active_buffs=[],
-        shar_faith=None,
+        protocol_confidence=None,
         memory_awakening=None,
     )
     assert len(prompt) > 100

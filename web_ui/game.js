@@ -2383,7 +2383,7 @@
         if (ACTOR_FRAMES.hostileById[id] !== undefined) return ACTOR_FRAMES.hostileById[id];
         if (hint.includes("drone")) return 11;
         if (hint.includes("skeleton")) return 13;
-        if (hint.includes("vampire")) return 12;
+        if (hint.includes("scout")) return 12;
         return pickFrame(ACTOR_FRAMES.hostile, id || hint);
       }
       if (kind === "neutral") {

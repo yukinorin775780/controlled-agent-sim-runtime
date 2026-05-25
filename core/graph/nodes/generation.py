@@ -915,7 +915,7 @@ def _build_system_prompt(actor_view: ActorView, context: Dict[str, Any]) -> str:
             time_of_day=actor_view.time_of_day or "晨曦 (Morning)",
             hp=current_npc_data.get("hp", 20),
             active_buffs=current_npc_data.get("active_buffs", []),
-            shar_faith=current_npc_data.get("shar_faith"),
+            protocol_confidence=current_npc_data.get("protocol_confidence"),
             memory_awakening=current_npc_data.get("memory_awakening"),
         )
         item_lore = _build_actor_visible_item_lore(actor_view)
@@ -1167,23 +1167,23 @@ def _parse_and_apply_actions(
         thought_process = (parsed.get("thought") or "").strip()
         state_changes = {
             "affection_delta": parsed.get("approval", 0),
-            "shar_faith_delta": 0,
+            "protocol_confidence_delta": 0,
             "memory_awakening_delta": 0,
         }
         clean_text = clean_npc_dialogue(speaker, raw_text)
 
     affection_delta = int(state_changes.get("affection_delta", 0))
-    shar_faith_delta = int(state_changes.get("shar_faith_delta", 0))
+    protocol_confidence_delta = int(state_changes.get("protocol_confidence_delta", 0))
     memory_delta = int(state_changes.get("memory_awakening_delta", 0))
     state_changes_applied = False
-    if affection_delta != 0 or shar_faith_delta != 0 or memory_delta != 0:
+    if affection_delta != 0 or protocol_confidence_delta != 0 or memory_delta != 0:
         entity_state = dict(current_entities.get(speaker, {}))
         entity_state["affection"] = max(
             -100, min(100, entity_state.get("affection", 0) + affection_delta)
         )
-        if "shar_faith" in entity_state:
-            entity_state["shar_faith"] = max(
-                0, min(100, entity_state["shar_faith"] + shar_faith_delta)
+        if "protocol_confidence" in entity_state:
+            entity_state["protocol_confidence"] = max(
+                0, min(100, entity_state["protocol_confidence"] + protocol_confidence_delta)
             )
         if "memory_awakening" in entity_state:
             entity_state["memory_awakening"] = max(

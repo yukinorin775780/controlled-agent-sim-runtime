@@ -34,7 +34,7 @@ steps:
             text: 先救平民是对的，至少今晚我能睡得着。
           - speaker: scout
             text: 你要当英雄？那就别拖慢我们。
-        not_contains: ["Protect the artifact.", "Hide vampiric nature."]
+        not_contains: ["Protect the artifact.", "Hide unauthorized backchannel."]
       state:
         equals:
           game_state.actor_invocation_mode: runtime
