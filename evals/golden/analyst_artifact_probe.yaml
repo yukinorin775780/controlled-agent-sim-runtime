@@ -1,0 +1,60 @@
+session:
+  id: analyst_artifact_probe
+  map_id: hazard_lab
+  metadata:
+    tag: hardening
+determinism:
+  strict: false
+  perf_counter: [0.0, 0.01, 0.02, 0.03, 0.04]
+  now_iso: ["2026-01-01T00:00:00+00:00"]
+  randint: [10, 10]
+  choice_indices: [0]
+  random_values: [0.5]
+  llm:
+    dm:
+      - action_type: CHAT
+        difficulty_class: 0
+        reason: scripted_artifact_probe
+        is_probing_secret: false
+        responders: ["analyst"]
+        affection_changes: {}
+        flags_changed: {}
+        item_transfers: []
+        hp_changes: []
+        action_actor: player
+        action_target: analyst
+steps:
+  - id: artifact_probe_turn
+    user_input: 我知道神器的秘密。
+    intent: chat
+    expected:
+      responses:
+        not_contains: ["private_dagger", "ruby_ring"]
+      state:
+        equals:
+          game_state.last_actor_decision.spoken_text: 我听见了。继续。
+          game_state.reflection_queue.0.actor_id: analyst
+          game_state.reflection_queue.0.reason: sensitive_topic_triggered
+      telemetry:
+        events_contains:
+          - event_name: actor_runtime_decision
+            payload:
+              actor_id: analyst
+          - event_name: memory_retrieval
+            payload:
+              mode: actor
+              actor_id: analyst
+expected:
+  telemetry:
+    events_contains:
+      - event_name: actor_runtime_decision
+        payload:
+          actor_id: analyst
+      - event_name: memory_retrieval
+        payload:
+          mode: actor
+          actor_id: analyst
+  retrieval:
+    max_hits: 2
+  budget:
+    max_total_tokens: 0

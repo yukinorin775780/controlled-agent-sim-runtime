@@ -1,0 +1,59 @@
+session:
+  id: hazard_lab_act4_final_exit_resolution_variants
+  map_id: hazard_lab
+determinism:
+  strict: false
+  perf_counter: [0.0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06]
+  now_iso: ["2026-01-01T00:00:00+00:00"]
+  randint: [12, 12]
+  choice_indices: [0]
+  random_values: [0.5]
+  llm:
+    dm:
+      - action_type: MOVE
+        difficulty_class: 0
+        reason: scripted_move_to_exit
+        is_probing_secret: false
+        responders: ["player"]
+        affection_changes: {}
+        flags_changed: {}
+        item_transfers: []
+        hp_changes: []
+        action_actor: player
+        action_target: 17,4
+      - action_type: INTERACT
+        difficulty_class: 0
+        reason: scripted_open_exit
+        is_probing_secret: false
+        responders: ["player"]
+        affection_changes: {}
+        flags_changed: {}
+        item_transfers: []
+        hp_changes: []
+        action_actor: player
+        action_target: heavy_oak_door_1
+    generation:
+      - 队伍移动到出口门前。
+      - 沉重的出口门被钥匙打开。
+steps:
+  - id: give_key
+    user_input: /add heavy_iron_key
+    intent: chat
+  - id: set_steal_route
+    user_input: /flag act4_scout_steal_key_success true
+    intent: chat
+  - id: move_to_exit
+    user_input: 移动到 17,4。
+    intent: chat
+  - id: open_exit
+    user_input: 用 heavy_iron_key 打开 heavy_oak_door_1。
+    intent: chat
+    expected:
+      state:
+        equals:
+          game_state.flags.act4_final_exit_opened: true
+          game_state.flags.hazard_lab_escape_complete: true
+          game_state.demo_cleared: true
+        contains:
+          game_state.journal_events:
+            - "Scout “不流血，不讲道德，只是专业。”"

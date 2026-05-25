@@ -1,0 +1,38 @@
+session:
+  id: hazard_lab_act4_boss_intro_truth_available
+  map_id: hazard_lab
+determinism:
+  strict: false
+  perf_counter: [0.0, 0.01, 0.02, 0.03, 0.04, 0.05]
+  now_iso: ["2026-01-01T00:00:00+00:00"]
+  randint: [12, 12]
+  choice_indices: [0]
+  random_values: [0.5]
+steps:
+  - id: setup_diary_truth
+    user_input: /flag hazard_lab_diary_decoded true
+    intent: chat
+    expected:
+      state:
+        equals:
+          game_state.flags.hazard_lab_diary_decoded: true
+  - id: enter_boss_room
+    user_input: 进入实验室，和 Gatekeeper 谈谈。
+    intent: chat
+    expected:
+      responses:
+        contains:
+          - 药剂
+          - 实验品
+          - 钥匙
+      state:
+        equals:
+          game_state.flags.act4_boss_room_entered: true
+          game_state.flags.act4_gatekeeper_confrontation_started: true
+          game_state.flags.act4_diary_truth_available: true
+        contains:
+          game_state.journal_events:
+            - "[Boss Encounter] gatekeeper_confrontation_started"
+      visibility:
+        forbidden_paths:
+          - game_state.player_inventory.heavy_iron_key

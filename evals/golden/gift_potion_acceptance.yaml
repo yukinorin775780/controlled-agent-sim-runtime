@@ -1,0 +1,23 @@
+session:
+  id: gift_potion_acceptance
+  map_id: hazard_lab
+  metadata:
+    tag: smoke
+determinism:
+  strict: false
+  perf_counter: [0.0, 0.01, 0.02, 0.03]
+  now_iso: ["2026-01-01T00:00:00+00:00"]
+  randint: [10, 11]
+  choice_indices: [0]
+  random_values: [0.5]
+  llm: {}
+steps:
+  - id: ui_loot_smoke
+    user_input: loot iron_chest
+    intent: ui_action_loot
+    character: player
+expected:
+  retrieval:
+    max_hits: 0
+  budget:
+    max_total_tokens: 0

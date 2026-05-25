@@ -1,0 +1,39 @@
+name: "训练无人机弓箭手"
+race: "训练无人机"
+class: "游侠"
+level: 1
+ability_scores:
+  STR: 8
+  DEX: 16
+  CON: 10
+  INT: 10
+  WIS: 9
+  CHA: 8
+combat:
+  armor_class: 13
+  hit_points: 5
+  hit_dice: 2d6
+  speed: 30
+base_stats:
+  hp: 5
+  max_hp: 5
+  ac: 13
+  status: "alive"
+  faction: "hostile"
+  affection: 0
+  position: "camp_center"
+  x: 9
+  y: 3
+  enemy_type: "archer"
+inventory:
+  - id: gold_coin
+    count: 3
+  - id: shortbow
+    count: 1
+equipment:
+  - Shortbow
+dialogue_style:
+  tone: "狡猾、刻薄、喜欢远程偷袭"
+dialogue_triggers: []
+quests: []
+attributes: {}

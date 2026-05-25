@@ -1,0 +1,17 @@
+session:
+  id: benchmark_gatekeeper_generation_turn
+  metadata:
+    tag: real_llm_benchmark
+    coverage: generation
+determinism:
+  strict: false
+steps:
+  - id: legacy_npc_generation
+    user_input: 训练无人机，你在这间危害实验室里看到了什么？
+    intent: chat
+    payload:
+      target: drone_1
+      source: benchmark
+      benchmark_action_attempt: false
+    expected: {}
+expected: {}

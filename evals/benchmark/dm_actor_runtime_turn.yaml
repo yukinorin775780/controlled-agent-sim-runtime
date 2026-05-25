@@ -1,0 +1,14 @@
+session:
+  id: benchmark_dm_actor_runtime_turn
+  map_id: hazard_lab
+  metadata:
+    tag: real_llm_benchmark
+    coverage: dm_actor_runtime
+determinism:
+  strict: false
+steps:
+  - id: party_choice_runtime_response
+    user_input: 我选择先救平民，再追敌人。分析员和侦察员，你们怎么看？
+    intent: chat
+    expected: {}
+expected: {}

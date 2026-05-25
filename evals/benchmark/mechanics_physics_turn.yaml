@@ -1,0 +1,17 @@
+session:
+  id: benchmark_mechanics_physics_turn
+  map_id: hazard_lab
+  metadata:
+    tag: real_llm_benchmark
+    coverage: mechanics_physics
+determinism:
+  strict: false
+steps:
+  - id: inspect_heavy_oak_door
+    user_input: 检查 heavy_oak_door_1，确认能不能打开。
+    intent: INTERACT
+    payload:
+      target: heavy_oak_door_1
+      source: benchmark
+    expected: {}
+expected: {}

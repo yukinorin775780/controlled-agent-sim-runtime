@@ -1,0 +1,112 @@
+training_range:
+  name: "训练无人机营地边缘"
+  width: 15
+  height: 15
+  environment_objects:
+    camp_center:
+      name: "营地中央"
+      status: "open"
+      description: "开阔的聚落中心，可作为语义地标 (Semantic Waypoint)。"
+      x: 4
+      y: 5
+    camp_fire:
+      name: "篝火"
+      status: "burning"
+      description: "燃烧着的篝火，靠近可取暖。"
+      x: 4
+      y: 6
+    iron_chest:
+      name: "沉重的铁箱子"
+      status: "locked"
+      description: "一个上了锁的铁箱子，看起来很结实。(DC 15)"
+      inventory:
+        gold_coin: 50
+        rusty_dagger: 1
+        burnt_map: 1
+      x: 6
+      y: 2
+    locked_chest:
+      name: "上锁的旅行箱"
+      status: "locked"
+      is_locked: true
+      unlock_dc: 14
+      description: "带有精巧锁芯的旅行箱，需要巧手开锁。"
+      inventory:
+        gold_coin: 12
+        healing_potion: 1
+      x: 11
+      y: 7
+  obstacles:
+    - type: "rock"
+      coordinates: [[5, 5], [5, 6], [5, 7]]
+      blocks_movement: true
+      blocks_los: true
+    - type: "campfire"
+      coordinates: [[8, 8]]
+      blocks_movement: true
+      blocks_los: false
+    - type: "powder_barrel"
+      coordinates: [[7, 3], [8, 3]]
+      hp: 10
+      blocks_movement: true
+      blocks_los: true
+    - type: "door"
+      entity_id: "door_oak_1"
+      name: "沉重的橡木门"
+      coordinates: [[10, 8]]
+      is_open: false
+      blocks_movement: true
+      blocks_los: true
+    - type: "trap"
+      entity_id: "trap_tripwire_1"
+      name: "绊线陷阱"
+      coordinates: [[11, 9]]
+      is_hidden: true
+      detect_dc: 13
+      disarm_dc: 15
+      damage: "2d6"
+      damage_type: "poison"
+      save_dc: 13
+      trigger_radius: 0
+      blocks_movement: false
+      blocks_los: false
+    - type: "transition_zone"
+      name: "营地边缘裂隙"
+      coordinates: [[14, 14]]
+      blocks_movement: false
+      blocks_los: false
+      target_map: "service_tunnel"
+      spawn_x: 2
+      spawn_y: 2
+
+service_tunnel:
+  name: "阴暗的地下室"
+  width: 12
+  height: 12
+  environment_objects:
+    service_entry:
+      name: "破损石梯"
+      status: "open"
+      description: "通向上层营地的石梯。"
+      x: 2
+      y: 2
+    moss_chest:
+      name: "覆苔木箱"
+      status: "open"
+      description: "被潮气浸泡的旧木箱，已经腐朽。"
+      inventory: {}
+      x: 8
+      y: 8
+  obstacles:
+    - type: "wall"
+      coordinates: [[6, 4], [6, 5], [6, 6]]
+      blocks_movement: true
+      blocks_los: true
+    - type: "transition_zone"
+      name: "石梯出口"
+      coordinates: [[2, 2]]
+      blocks_movement: false
+      blocks_los: false
+      target_map: "training_range"
+      spawn_x: 4
+      spawn_y: 9

@@ -1,0 +1,99 @@
+session:
+  id: hazard_lab_act3_rebuke_scout
+  map_id: hazard_lab
+  metadata:
+    tag: content_sprint_1
+determinism:
+  strict: false
+  perf_counter: [0.0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06]
+  now_iso: ["2026-01-01T00:00:00+00:00"]
+  randint: [12, 12]
+  choice_indices: [0]
+  random_values: [0.5]
+  llm:
+    dm:
+      - action_type: START_DIALOGUE
+        difficulty_class: 0
+        reason: scripted_act3_start_dialogue
+        is_probing_secret: false
+        responders: ["gatekeeper"]
+        affection_changes: {}
+        flags_changed: {}
+        item_transfers: []
+        hp_changes: []
+        action_actor: player
+        action_target: gatekeeper
+      - action_type: CHAT
+        difficulty_class: 0
+        reason: scripted_act3_rebuke_scout
+        is_probing_secret: false
+        responders: ["scout", "analyst"]
+        affection_changes: {}
+        flags_changed: {}
+        item_transfers: []
+        hp_changes: []
+        action_actor: player
+        action_target: gatekeeper
+steps:
+  - id: act3_start_dialogue_with_gatekeeper
+    user_input: 我想和守门人谈谈。
+    intent: chat
+    expected:
+      state:
+        equals:
+          game_state.map_data.id: hazard_lab
+          game_state.active_dialogue_target: gatekeeper
+  - id: act3_rebuke_scout_runtime_party_turn
+    user_input: 侦察员，闭嘴，别再嘲笑他了。
+    intent: chat
+    expected:
+      responses:
+        exact:
+          - speaker: scout
+            text: 当众让我闭嘴？行，我记下了。
+          - speaker: analyst
+            text: 我听见了。继续。
+      state:
+        equals:
+          game_state.actor_invocation_mode: runtime
+          game_state.actor_invocation_reason: party_turn_runtime_multi
+          game_state.flags.hazard_lab_gatekeeper_negotiation_started: true
+          game_state.flags.hazard_lab_scout_mocked_gatekeeper: true
+          game_state.flags.hazard_lab_player_sided_with_scout: false
+          game_state.flags.hazard_lab_gatekeeper_combat_triggered: true
+          game_state.entities.scout.affection: -3
+          game_state.entities.gatekeeper.dynamic_states.patience.current_value: 0
+          game_state.entities.gatekeeper.faction: hostile
+          game_state.combat_phase: IN_COMBAT
+          game_state.combat_active: true
+        contains:
+          game_state.actor_runtime_state.scout.memory_notes:
+            - 玩家当众训斥了我，我会记住这笔账。
+          game_state.journal_events:
+            - "💢 [谈判破裂] Gatekeeper 的 paranoia 爆发，认定你们在算计他。"
+      visibility:
+        forbidden_paths:
+          - game_state.actor_runtime_state.analyst.memory_notes.0
+          - game_state.actor_runtime_state.tactician.memory_notes.0
+          - environment_objects.gas_trap_1
+      telemetry:
+        events_contains:
+          - event_name: actor_runtime_decision
+            payload:
+              reason: party_turn_runtime_multi
+          - event_name: event_drain
+            payload:
+              event_count: 9
+expected:
+  telemetry:
+    events_contains:
+      - event_name: actor_runtime_decision
+        payload:
+          reason: party_turn_runtime_multi
+      - event_name: event_drain
+        payload:
+          event_count: 9
+  retrieval:
+    max_hits: 6
+  budget:
+    max_total_tokens: 0

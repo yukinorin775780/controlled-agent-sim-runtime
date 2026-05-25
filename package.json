@@ -1,0 +1,12 @@
+{
+  "name": "controlled-agent-sim-runtime-web-ui-tests",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "test": "jest --runInBand web_ui/tests/app.test.js"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
+  }
+}

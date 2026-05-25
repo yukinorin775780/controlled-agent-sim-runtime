@@ -1,0 +1,17 @@
+session:
+  id: benchmark_physical_action_turn
+  map_id: hazard_lab
+  metadata:
+    tag: real_llm_benchmark
+    coverage: physical_action
+determinism:
+  strict: false
+steps:
+  - id: move_toward_lab_exit
+    user_input: 移动到 17,4，靠近 heavy_oak_door_1。
+    intent: MOVE
+    payload:
+      target: 17,4
+      source: benchmark
+    expected: {}
+expected: {}

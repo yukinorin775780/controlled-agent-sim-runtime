@@ -1,0 +1,33 @@
+session:
+  id: hazard_lab_act4_assault_defeats_gatekeeper
+  map_id: hazard_lab
+determinism:
+  strict: false
+  perf_counter: [0.0, 0.01, 0.02, 0.03, 0.04, 0.05]
+  now_iso: ["2026-01-01T00:00:00+00:00"]
+  randint: [12, 12]
+  choice_indices: [0]
+  random_values: [0.5]
+  llm:
+    generation:
+      - Tactician 结束了守门人的威胁，钥匙落入队伍手中。
+steps:
+  - id: force_success
+    user_input: /flag hazard_lab_force_assault_success true
+    intent: chat
+  - id: assault_gatekeeper
+    user_input: Tactician，解决他。别让他碰阀门。
+    intent: chat
+    expected:
+      state:
+        equals:
+          game_state.flags.act4_assault_success: true
+          game_state.flags.world_hazard_lab_gatekeeper_defeated: true
+          game_state.entities.gatekeeper.status: dead
+          game_state.entities.gatekeeper.faction: defeated
+          game_state.player_inventory.heavy_iron_key: 1
+          game_state.entities.tactician.affection: 1
+          game_state.entities.analyst.affection: 49
+        contains:
+          game_state.journal_events:
+            - "[Boss解决] assault -> gatekeeper_defeated"

@@ -1,0 +1,278 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<map version="1.5" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="25" height="25" tilewidth="32" tileheight="32" infinite="0" nextlayerid="9" nextobjectid="18">
+ <tileset firstgid="1" name="dungeon_tiles" tilewidth="32" tileheight="32" tilecount="100" columns="10">
+  <image source="../../web_ui/assets/2D Pixel Dungeon Asset Pack/character and tileset/Dungeon_Tileset.png" width="320" height="320" />
+ </tileset>
+ <layer id="1" name="ground" width="25" height="25">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,
+0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,
+0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,
+0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,
+0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,
+0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,
+0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,
+0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,1,1,1,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,1,1,1,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,1,1,1,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,1,1,1,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,1,1,1,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="2" name="collision" width="25" height="25">
+  <data encoding="csv">
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,
+1,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,1,
+1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,
+1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,
+1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,1,1,1,
+1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,
+1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,0,1,0,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,0,0,0,1,0,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,0,0,0,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,0,0,0,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,0,0,0,0,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,0,1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+</data>
+ </layer>
+ <layer id="3" name="los_blockers" width="25" height="25">
+  <data encoding="csv">
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,
+1,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,1,
+1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,
+1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,1,
+1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,
+1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,1,1,1,1,
+1,1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,
+1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,0,1,0,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,0,0,0,1,0,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,0,0,0,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,0,0,0,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,0,0,0,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,0,0,0,0,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,0,1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+</data>
+ </layer>
+ <layer id="4" name="ground_types" width="25" height="25">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,
+0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,
+0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,
+0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,
+0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,
+0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,
+0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,
+0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,2,2,2,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,2,2,2,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,2,2,2,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,2,2,2,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,2,2,2,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,2,2,2,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <objectgroup id="5" name="triggers">
+  <object id="1" name="corridor_approach" type="narrative_trigger" x="160" y="384" width="96" height="32">
+   <properties>
+     <property name="trigger_id" value="act1_corridor_approach" />
+     <property name="trigger_text" value="门后的空气骤然变冷，狭窄石廊铺着普通灰石地砖；墙缝里传来若有若无的气压声。" />
+     <property name="room_id" value="room_b_corridor" />
+   </properties>
+  </object>
+  <object id="2" name="poison_trap_1" type="trap" x="160" y="352" width="32" height="32">
+   <properties>
+     <property name="detect_dc" type="int" value="13" />
+     <property name="disarm_dc" type="int" value="15" />
+     <property name="damage" value="2d6" />
+     <property name="damage_type" value="poison" />
+     <property name="save_dc" type="int" value="13" />
+     <property name="save_type" value="dex" />
+     <property name="is_hidden" type="bool" value="true" />
+     <property name="trap_type" value="poison_gas" />
+     <property name="room_id" value="room_b_corridor" />
+   </properties>
+  </object>
+  <object id="3" name="poison_trap_2" type="trap" x="192" y="288" width="32" height="32">
+   <properties>
+     <property name="detect_dc" type="int" value="15" />
+     <property name="disarm_dc" type="int" value="17" />
+     <property name="damage" value="3d6" />
+     <property name="damage_type" value="poison" />
+     <property name="save_dc" type="int" value="15" />
+     <property name="save_type" value="dex" />
+     <property name="is_hidden" type="bool" value="true" />
+     <property name="trap_type" value="poison_gas" />
+     <property name="room_id" value="room_b_corridor" />
+   </properties>
+  </object>
+  <object id="4" name="operating_room_enter" type="narrative_trigger" x="160" y="224" width="96" height="32">
+   <properties>
+     <property name="trigger_id" value="act3_operating_room" />
+     <property name="trigger_text" value="厚门后方传来玻璃罐震动的回响，手术台与尸体围出一片不祥的实验舞台。" />
+     <property name="room_id" value="room_d_lab" />
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="6" name="interactables">
+  <object id="5" name="door_a_to_b" type="door" x="160" y="512" width="64" height="32">
+   <properties>
+     <property name="name" value="通往毒气走廊的铁门" />
+     <property name="is_open" type="bool" value="false" />
+     <property name="is_locked" type="bool" value="false" />
+     <property name="description" value="一扇锈迹斑斑的铁门，是安全房通向危险走廊的唯一出口。" />
+     <property name="connects_from" value="room_a_spawn" />
+     <property name="connects_to" value="room_b_corridor" />
+   </properties>
+  </object>
+  <object id="6" name="door_b_to_c" type="door" x="256" y="352" width="32" height="32">
+   <properties>
+     <property name="name" value="伪装成书架阴影的暗门" />
+     <property name="is_open" type="bool" value="false" />
+     <property name="is_locked" type="bool" value="false" />
+     <property name="description" value="墙缝与书架阴影重叠，只有仔细观察才会发现门轴痕迹。" />
+     <property name="connects_from" value="room_b_corridor" />
+     <property name="connects_to" value="room_c_secret_study" />
+     <property name="is_secret" type="bool" value="true" />
+     <property name="detect_dc" type="int" value="14" />
+     <property name="is_hidden" type="bool" value="true" />
+     <property name="is_revealed" type="bool" value="false" />
+   </properties>
+  </object>
+  <object id="7" name="door_b_to_d" type="door" x="160" y="224" width="64" height="32">
+   <properties>
+     <property name="name" value="锁住的实验室重门" />
+     <property name="is_open" type="bool" value="false" />
+     <property name="is_locked" type="bool" value="true" />
+     <property name="key_required" value="lab_key" />
+     <property name="lockpick_dc" type="int" value="15" />
+     <property name="description" value="门板厚重，锁芯被炼金符号和暗红手印包围。" />
+     <property name="alternate_unlock_text" value="也可以尝试撬开这把复杂的实验室锁。" />
+     <property name="connects_from" value="room_b_corridor" />
+     <property name="connects_to" value="room_d_lab" />
+   </properties>
+  </object>
+  <object id="8" name="exit_door" type="door" x="576" y="96" width="32" height="64">
+   <properties>
+     <property name="name" value="通往地表的沉重大门" />
+     <property name="is_open" type="bool" value="false" />
+     <property name="is_locked" type="bool" value="true" />
+     <property name="description" value="比实验室门更高更厚，门缝后透出冷白的地表光。" />
+     <property name="is_exit" type="bool" value="true" />
+     <property name="alias_id" value="heavy_oak_door_1" />
+     <property name="key_required" value="heavy_iron_key" />
+     <property name="requires_flag" value="world_hazard_lab_gatekeeper_defeated" />
+     <property name="room_id" value="room_exit" />
+     <property name="connects_from" value="room_d_lab" />
+     <property name="connects_to" value="room_exit" />
+   </properties>
+  </object>
+  <object id="9" name="hazard_diary" type="readable" x="384" y="352" width="32" height="32">
+   <properties>
+     <property name="name" value="危害研究员的实验日志" />
+     <property name="lore_id" value="hazard_diary_1" />
+     <property name="description" value="血污纸张压在破桌中央，记录着复活实验的失败批注。" />
+     <property name="intelligence_dc" type="int" value="10" />
+     <property name="success_text" value="你读懂了日志，发现实验室钥匙曾被藏在书房旧箱中。" />
+     <property name="failure_text" value="字迹潦草难辨，只能看出一些关于尸体和钥匙的零散词句。" />
+     <property name="alias_id" value="hazard_diary" />
+     <property name="room_id" value="room_c_secret_study" />
+   </properties>
+  </object>
+  <object id="10" name="chemical_notes" type="readable" x="448" y="352" width="32" height="32">
+   <properties>
+     <property name="name" value="化学残页" />
+     <property name="lore_id" value="hazard_chemical_notes" />
+     <property name="description" value="药剂批注把毒、死亡和意志控制写在同一页。" />
+     <property name="alias_id" value="chemical_notes" />
+     <property name="room_id" value="room_c_secret_study" />
+   </properties>
+  </object>
+  <object id="18" name="iron_key_sketch" type="readable" x="384" y="416" width="32" height="32">
+   <properties>
+     <property name="name" value="重铁钥匙草图" />
+     <property name="lore_id" value="hazard_iron_key_sketch" />
+     <property name="description" value="草图把 Gatekeeper、钥匙和路线标在同一条逃生线上。" />
+     <property name="alias_id" value="iron_key_sketch" />
+     <property name="room_id" value="room_c_secret_study" />
+   </properties>
+  </object>
+  <object id="19" name="study_chest" type="chest" x="416" y="384" width="32" height="32">
+   <properties>
+     <property name="name" value="旧木箱" />
+     <property name="is_locked" type="bool" value="false" />
+     <property name="description" value="书房角落的旧木箱，箱盖松动，旁边散落着蜡烛和笔记。" />
+     <property name="inventory" value="lab_key:1,gold_coin:25,scroll_healing:1" />
+     <property name="alias_id" value="chest_1" />
+     <property name="room_id" value="room_c_secret_study" />
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="7" name="spawns">
+  <object id="11" name="player_start" type="spawn_point" x="160" y="608" width="32" height="32" />
+  <object id="12" name="gatekeeper" type="npc" x="320" y="128" width="32" height="32">
+   <properties>
+     <property name="prefab" value="characters/gatekeeper.yaml" />
+     <property name="instance_id" value="gatekeeper" />
+     <property name="faction" value="neutral" />
+     <property name="ai_type" value="negotiable" />
+     <property name="patrol_radius" type="int" value="3" />
+     <property name="room_id" value="room_d_lab" />
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="8" name="rooms">
+  <object id="13" name="room_a_spawn" type="room" x="96" y="544" width="224" height="160" />
+  <object id="14" name="room_b_corridor" type="room" x="160" y="224" width="96" height="320" />
+  <object id="15" name="room_c_secret_study" type="room" x="288" y="288" width="192" height="192" />
+  <object id="16" name="room_d_lab" type="room" x="64" y="32" width="544" height="224" />
+  <object id="17" name="room_exit" type="room" x="608" y="64" width="160" height="128" />
+ </objectgroup>
+</map>

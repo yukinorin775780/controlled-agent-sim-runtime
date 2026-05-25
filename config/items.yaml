@@ -1,0 +1,57 @@
+# Item Database - Single Source of Truth
+# 物品数据库 - 数据层
+
+items:
+  # 1. Quest Items (Non-stackable, with triggers)
+  # 任务物品（不可堆叠，带触发器）
+  mysterious_artifact:
+    name: "未知协议的遗物"
+    description: "散发着黑暗气息的盒子，表面刻有奇异的符文。"
+    type: "quest"
+    stackable: false
+    weight: 1.0
+    # Reserved interface for future EventBus
+    on_acquire:
+      flag_update: "has_artifact = True"
+      event_emit: "ARTIFACT_FOUND"
+
+  # 2. Consumables (Stackable, standardized effects)
+  # 消耗品（可堆叠，标准化效果）
+  healing_potion:
+    name: "治疗药水"
+    description: "回复 2d4+2 点生命值。"
+    type: "consumable"
+    stackable: true
+    max_stack: 20
+    weight: 0.5
+    effect: "heal:2d4+2"
+
+  # 3. Loot (Trade items)
+  # 战利品（交易物品）
+  ruby_gem:
+    name: "红宝石"
+    description: "一颗在此地罕见的宝石，切工粗糙但成色不错。"
+    type: "loot"
+    stackable: true
+    value: 50
+    weight: 0.1
+
+  # 4. Common items
+  # 通用物品
+  gold_coin:
+    name: "金币"
+    description: "通用货币。"
+    type: "currency"
+    stackable: true
+    max_stack: 9999
+    weight: 0.01
+    value: 1
+
+  scale_mail:
+    name: "鳞甲"
+    description: "由金属鳞片缀成的中甲。"
+    type: "armor"
+    stackable: false
+    weight: 45.0
+    equip_slot: "armor"
+    armor_class: 14

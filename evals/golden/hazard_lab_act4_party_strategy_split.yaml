@@ -1,0 +1,39 @@
+session:
+  id: hazard_lab_act4_party_strategy_split
+  map_id: hazard_lab
+determinism:
+  strict: false
+  perf_counter: [0.0, 0.01, 0.02, 0.03, 0.04, 0.05]
+  now_iso: ["2026-01-01T00:00:00+00:00"]
+  randint: [12, 12]
+  choice_indices: [0]
+  random_values: [0.5]
+steps:
+  - id: setup_boss_context
+    user_input: /flag act4_gatekeeper_confrontation_started true
+    intent: command
+    expected:
+      state:
+        equals:
+          game_state.flags.act4_gatekeeper_confrontation_started: true
+  - id: ask_party_strategy
+    user_input: 我们怎么处理他？队友们有什么建议，怎么拿钥匙？
+    intent: chat
+    expected:
+      responses:
+        contains:
+          - 他害怕得快把钥匙捏碎了
+          - 毒气罐可能会先炸
+          - 杀掉守门人
+      state:
+        equals:
+          game_state.combat_active: false
+        contains:
+          game_state.journal_events:
+            - "[Boss方案] scout -> steal_key"
+            - "[Boss方案] analyst -> contain_corruption"
+            - "[Boss方案] tactician -> execute"
+      visibility:
+        forbidden_paths:
+          - game_state.player_inventory.heavy_iron_key
+          - game_state.flags.act4_gatekeeper_combat_triggered

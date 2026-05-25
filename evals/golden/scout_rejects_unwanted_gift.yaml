@@ -1,0 +1,83 @@
+session:
+  id: scout_rejects_unwanted_gift
+  map_id: hazard_lab
+  metadata:
+    tag: social_item_protocol
+determinism:
+  strict: false
+  perf_counter: [0.0, 0.01, 0.02, 0.03, 0.04, 0.05]
+  now_iso: ["2026-01-01T00:00:00+00:00"]
+  randint: [11, 11]
+  choice_indices: [0]
+  random_values: [0.5]
+  llm:
+    dm:
+      - action_type: CHAT
+        difficulty_class: 0
+        reason: scripted_scout_rejects_unwanted_gift
+        is_probing_secret: false
+        responders: ["scout"]
+        affection_changes: {}
+        flags_changed: {}
+        item_transfers: []
+        hp_changes: []
+        action_actor: player
+        action_target: scout
+steps:
+  - id: scout_reject_gift
+    user_input: 侦察员，我送你一瓶治疗药水。
+    intent: chat
+    expected:
+      responses:
+        contains: ["把你的施舍收回去。我不需要。"]
+        not_contains: ["mysterious_artifact", "private_relic", "Protect the artifact."]
+      state:
+        equals:
+          game_state.actor_invocation_mode: runtime
+          game_state.actor_invocation_reason: runtime_enabled
+          game_state.last_actor_decision.actor_id: scout
+          game_state.last_actor_decision.kind: speak
+          game_state.player_inventory.healing_potion: 2
+          game_state.pending_events: []
+        contains:
+          game_state.actor_runtime_state.scout.memory_notes:
+            - "scout 记录社交物品互动：gift_reject healing_potion (unwanted_gift)"
+      visibility:
+        forbidden_paths:
+          - game_state.pending_events.0
+          - game_state.entities.scout.inventory.mysterious_artifact
+      telemetry:
+        events_contains:
+          - event_name: actor_runtime_decision
+            payload:
+              actor_id: scout
+          - event_name: memory_retrieval
+            payload:
+              mode: actor
+              actor_id: scout
+          - event_name: event_drain
+            payload:
+              event_count: 3
+              transaction_rejected_count: 1
+        events_not_contains:
+          - event_name: actor_runtime_decision
+            payload:
+              actor_id: scout
+              mode: fallback
+          - event_name: memory_retrieval
+            payload:
+              mode: actor
+              actor_id: analyst
+expected:
+  telemetry:
+    events_contains:
+      - event_name: actor_runtime_decision
+        payload:
+          actor_id: scout
+      - event_name: event_drain
+        payload:
+          transaction_rejected_count: 1
+  retrieval:
+    max_hits: 3
+  budget:
+    max_total_tokens: 0

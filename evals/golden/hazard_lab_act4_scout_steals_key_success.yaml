@@ -1,0 +1,31 @@
+session:
+  id: hazard_lab_act4_scout_steals_key_success
+  map_id: hazard_lab
+determinism:
+  strict: false
+  perf_counter: [0.0, 0.01, 0.02, 0.03, 0.04, 0.05]
+  now_iso: ["2026-01-01T00:00:00+00:00"]
+  randint: [12, 12]
+  choice_indices: [0]
+  random_values: [0.5]
+  llm:
+    generation:
+      - Scout 的手比 Gatekeeper 的恐惧更快。
+steps:
+  - id: force_success
+    user_input: /flag hazard_lab_force_steal_key_success true
+    intent: chat
+  - id: scout_steals_key
+    user_input: 侦察员，偷钥匙。
+    intent: chat
+    expected:
+      state:
+        equals:
+          game_state.flags.act4_scout_steal_key_attempted: true
+          game_state.flags.act4_scout_steal_key_success: true
+          game_state.flags.act4_heavy_iron_key_obtained: true
+          game_state.player_inventory.heavy_iron_key: 1
+          game_state.entities.scout.affection: 1
+        contains:
+          game_state.journal_events:
+            - "[Boss解决] scout_steal -> heavy_iron_key"

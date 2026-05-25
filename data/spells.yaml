@@ -1,0 +1,37 @@
+# 0环戏法 (Cantrips) - 不消耗法术位
+sacred_flame:
+  name: "圣火术"
+  level: 0
+  target: "single"
+  range: 6
+  damage: "1d8"
+  damage_type: "radiant" # 光耀伤害
+  saving_throw: "DEX"    # 敏捷豁免
+  aliases:
+    - "圣火"
+    - "sacred flame"
+
+# 1环法术 (1st-Level Spells) - 消耗 1个 1环法术位
+thunderwave:
+  name: "雷鸣波"
+  level: 1
+  target: "aoe"
+  aoe_shape: "3x3_centered" # 以施法者为中心的3x3九宫格
+  damage: "2d8"
+  damage_type: "thunder"    # 雷鸣伤害
+  saving_throw: "CON"       # 体质豁免
+  aliases:
+    - "雷鸣术"
+    - "thunder wave"
+
+healing_word:
+  name: "治愈真言"
+  level: 1
+  target: "single"
+  range: 6
+  effect: "heal"
+  heal: "1d4"
+  healing_ability: "WIS"
+  aliases:
+    - "healing word"
+    - "治疗真言"

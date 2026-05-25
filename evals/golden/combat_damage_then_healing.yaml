@@ -1,0 +1,88 @@
+session:
+  id: combat_damage_then_healing
+  map_id: hazard_lab
+  metadata:
+    tag: narrative_loop
+determinism:
+  strict: false
+  perf_counter: [0.0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07]
+  now_iso: ["2026-01-01T00:00:00+00:00"]
+  randint: [10, 10]
+  choice_indices: [0]
+  random_values: [0.5]
+  llm:
+    dm:
+      - action_type: CHAT
+        difficulty_class: 0
+        reason: scripted_combat_damage_then_healing
+        is_probing_secret: false
+        responders: ["analyst"]
+        affection_changes: {}
+        flags_changed: {}
+        item_transfers: []
+        hp_changes: []
+        action_actor: player
+        action_target: analyst
+steps:
+  - id: apply_burning_to_analyst
+    user_input: /buff analyst burning 1 3
+    intent: chat
+    expected:
+      state:
+        equals:
+          game_state.entities.analyst.active_buffs.0.id: burning
+          game_state.entities.analyst.active_buffs.0.value: 3
+  - id: damage_tick_runtime_turn
+    user_input: 继续。
+    intent: chat
+    expected:
+      state:
+        equals:
+          game_state.entities.analyst.hp: 15
+          game_state.actor_invocation_mode: runtime
+          game_state.actor_invocation_reason: runtime_enabled
+          game_state.last_actor_decision.actor_id: analyst
+          game_state.pending_events: []
+      visibility:
+        forbidden_paths:
+          - game_state.entities.analyst.active_buffs.0
+      telemetry:
+        events_contains:
+          - event_name: actor_runtime_decision
+            payload:
+              actor_id: analyst
+          - event_name: memory_retrieval
+            payload:
+              mode: actor
+              actor_id: analyst
+          - event_name: event_drain
+            payload:
+              event_count: 1
+  - id: use_potion_to_heal_analyst
+    user_input: /use healing_potion analyst
+    intent: chat
+    expected:
+      state:
+        equals:
+          game_state.entities.analyst.hp: 18
+          game_state.player_inventory.healing_potion: 1
+      visibility:
+        forbidden_paths:
+          - game_state.entities.scout.inventory.mysterious_artifact
+expected:
+  telemetry:
+    events_contains:
+      - event_name: actor_runtime_decision
+        payload:
+          actor_id: analyst
+      - event_name: memory_retrieval
+        payload:
+          mode: actor
+          actor_id: analyst
+      - event_name: event_drain
+        payload:
+          event_count: 1
+  retrieval:
+    max_hits: 3
+  budget:
+    max_total_tokens: 0

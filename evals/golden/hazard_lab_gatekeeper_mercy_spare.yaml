@@ -1,0 +1,85 @@
+session:
+  id: hazard_lab_gatekeeper_mercy_spare
+  map_id: hazard_lab
+  metadata:
+    tag: content_showcase_sprint_2e
+determinism:
+  strict: false
+  perf_counter: [0.0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07]
+  now_iso: ["2026-01-01T00:00:00+00:00"]
+  randint: [12]
+  choice_indices: [0]
+  random_values: [0.5]
+steps:
+  - id: setup_mercy_window
+    user_input: /flag hazard_lab_gatekeeper_mercy_window true
+    intent: command
+    expected:
+      state:
+        equals:
+          game_state.flags.hazard_lab_gatekeeper_mercy_window: true
+  - id: setup_diary_decoded
+    user_input: /flag hazard_lab_diary_decoded true
+    intent: command
+    expected:
+      state:
+        equals:
+          game_state.flags.hazard_lab_diary_decoded: true
+  - id: party_splits_on_mercy
+    user_input: 队友怎么看，应该怎么处理 Gatekeeper？
+    intent: chat
+    expected:
+      responses:
+        contains:
+          - 受害者
+          - 处决
+      state:
+        contains:
+          game_state.journal_events:
+            - "[站队] analyst -> mercy"
+            - "[站队] tactician -> execute"
+            - "[站队] scout -> mocking"
+        equals:
+          game_state.pending_events: []
+      telemetry:
+        events_contains:
+          - event_name: actor_runtime_decision
+          - event_name: event_drain
+  - id: spare_gatekeeper
+    user_input: 放过他，留他一命。
+    intent: chat
+    expected:
+      responses:
+        contains:
+          - 放过
+          - Gatekeeper
+      state:
+        equals:
+          game_state.flags.hazard_lab_gatekeeper_spared: true
+          game_state.flags.hazard_lab_gatekeeper_mercy_resolved: true
+          game_state.entities.gatekeeper.status: spared
+          game_state.entities.gatekeeper.faction: neutralized
+          game_state.entities.analyst.affection: 52
+          game_state.entities.tactician.affection: -1
+          game_state.pending_events: []
+        contains:
+          game_state.journal_events:
+            - "[抉择] gatekeeper -> spared"
+          game_state.actor_runtime_state.analyst.memory_notes:
+            - "玩家放过了被危害实验扭曲的 Gatekeeper。怜悯有代价，但这次我认同。"
+      visibility:
+        forbidden_paths:
+          - game_state.player_inventory.heavy_iron_key
+      telemetry:
+        events_contains:
+          - event_name: actor_runtime_decision
+          - event_name: event_drain
+expected:
+  telemetry:
+    events_contains:
+      - event_name: actor_runtime_decision
+      - event_name: event_drain
+  retrieval:
+    max_hits: 8
+  budget:
+    max_total_tokens: 0

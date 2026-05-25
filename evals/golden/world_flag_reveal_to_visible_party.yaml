@@ -1,0 +1,123 @@
+session:
+  id: world_flag_reveal_to_visible_party
+  map_id: hazard_lab
+  metadata:
+    tag: visibility_policy
+determinism:
+  strict: false
+  perf_counter: [0.0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06]
+  now_iso: ["2026-01-01T00:00:00+00:00"]
+  randint: [12, 12]
+  choice_indices: [0]
+  random_values: [0.5]
+  llm:
+    dm:
+      - action_type: CHAT
+        difficulty_class: 0
+        reason: scripted_tactician_before_reveal
+        is_probing_secret: false
+        responders: ["tactician"]
+        affection_changes: {}
+        flags_changed: {}
+        item_transfers: []
+        hp_changes: []
+        action_actor: player
+        action_target: tactician
+      - action_type: CHAT
+        difficulty_class: 0
+        reason: scripted_tactician_after_reveal
+        is_probing_secret: false
+        responders: ["tactician"]
+        affection_changes: {}
+        flags_changed: {}
+        item_transfers: []
+        hp_changes: []
+        action_actor: player
+        action_target: tactician
+steps:
+  - id: seed_hidden_policy_flag
+    user_input: /flag mercy_consequence_log {"value":true,"visibility":{"scope":"hidden","reveal_when":{"flag":"world_party_mercy_choice","equals":true}}}
+    intent: chat
+    expected:
+      state:
+        equals:
+          game_state.flags.mercy_consequence_log.value: true
+          game_state.flags.mercy_consequence_log.visibility.scope: hidden
+  - id: explicit_hide_world_reveal
+    user_input: /flag world_party_mercy_choice false
+    intent: chat
+    expected:
+      state:
+        equals:
+          game_state.flags.world_party_mercy_choice: false
+  - id: tactician_runtime_before_reveal
+    user_input: 战术员，继续。
+    intent: chat
+    expected:
+      responses:
+        not_contains: ["mercy_consequence_log", "analyst_artifact_secret", "Protect the artifact."]
+      state:
+        equals:
+          game_state.actor_invocation_mode: runtime
+          game_state.actor_invocation_reason: runtime_enabled
+          game_state.last_actor_decision.actor_id: tactician
+          game_state.last_actor_decision.kind: speak
+          game_state.flags.world_party_mercy_choice: false
+          game_state.pending_events: []
+      visibility:
+        forbidden_paths:
+          - game_state.entities.tactician.inventory.private_relic
+  - id: reveal_world_flag
+    user_input: /flag world_party_mercy_choice true
+    intent: chat
+    expected:
+      state:
+        equals:
+          game_state.flags.world_party_mercy_choice: true
+      visibility:
+        required_paths:
+          - game_state.flags.world_party_mercy_choice
+  - id: tactician_runtime_after_reveal
+    user_input: 战术员，继续。
+    intent: chat
+    expected:
+      state:
+        equals:
+          game_state.actor_invocation_mode: runtime
+          game_state.actor_invocation_reason: runtime_enabled
+          game_state.last_actor_decision.actor_id: tactician
+          game_state.last_actor_decision.kind: speak
+          game_state.flags.world_party_mercy_choice: true
+          game_state.pending_events: []
+        contains:
+          game_state.last_actor_decision.visible_flag_keys:
+            - mercy_consequence_log
+            - world_party_mercy_choice
+      visibility:
+        forbidden_paths:
+          - game_state.flags.analyst_artifact_secret
+      telemetry:
+        events_contains:
+          - event_name: actor_runtime_decision
+            payload:
+              actor_id: tactician
+          - event_name: memory_retrieval
+            payload:
+              mode: actor
+              actor_id: tactician
+          - event_name: event_drain
+            payload:
+              event_count: 1
+expected:
+  telemetry:
+    events_contains:
+      - event_name: actor_runtime_decision
+        payload:
+          actor_id: tactician
+      - event_name: event_drain
+        payload:
+          event_count: 1
+  retrieval:
+    max_hits: 6
+  budget:
+    max_total_tokens: 0

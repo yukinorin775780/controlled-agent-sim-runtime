@@ -1,0 +1,4 @@
+runtime_enabled_actors:
+  - analyst
+  - scout
+  - tactician

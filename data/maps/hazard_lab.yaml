@@ -1,0 +1,140 @@
+map_id: "hazard_lab"
+name: "危害研究员的废弃实验室"
+player_start: [2, 2]
+grid:
+  - "W W W W W W W W W W W W W W W W W W W W"
+  - "W . . . . . . . . . . . . . . . . . . W"
+  - "W . . . . . . . . . . . . . . . . . . W"
+  - "W . . . . . . . . . . . . . . . . . . W"
+  - "W . . . . . . . . . . . . . . . . . . W"
+  - "W . . . . . . . . . . . . . . . . . . W"
+  - "W . . . . . . . . . . . . . . . . . . W"
+  - "W . . . . . . . . . . . . . . . . . . W"
+  - "W . . . . . . . . . . . . . . . . . . W"
+  - "W . . . . . . . . . . . . . . . . . . W"
+  - "W . . . . . . . . . . . . . . . . . . W"
+  - "W . . . . . . . . . . . . . . . . . . W"
+  - "W . . . . . . . . . . . . . . . . . . W"
+  - "W W W W W W W W W W W W W W W W W W W W"
+environment_objects:
+  - id: "door_a_to_b"
+    type: "door"
+    name: "通往毒气走廊的门"
+    position: [3, 2]
+    room_id: "room_a_spawn"
+    is_open: false
+    is_locked: false
+    status: "closed"
+    connects_from: "room_a_spawn"
+    connects_to: "room_b_corridor"
+    alias_ids: ["ab_door", "corridor_entrance"]
+  - id: "door_b_to_d"
+    type: "door"
+    name: "通往实验室的重门"
+    position: [5, 7]
+    is_open: false
+    is_locked: true
+    status: "locked"
+    key_required: "lab_key"
+    lockpick_dc: 15
+    alias_ids: ["lab_door", "laboratory_door"]
+  - id: "heavy_oak_door_1"
+    type: "door"
+    name: "通往地表的出口"
+    position: [18, 3]
+    room_id: "room_exit"
+    is_open: false
+    is_locked: true
+    is_exit: true
+    key_required: "heavy_iron_key"
+    requires_flag: "world_hazard_lab_gatekeeper_defeated"
+    connects_from: "room_d_lab"
+    connects_to: "room_exit"
+    alias_ids: ["exit_door"]
+  - id: "gas_trap_1"
+    type: "trap"
+    name: "毒气陷阱"
+    position: [5, 11]
+    is_hidden: true
+    detect_dc: 13
+    disarm_dc: 15
+    damage: "2d6"
+    damage_type: "poison"
+    save_dc: 13
+    trigger_radius: 0
+    alias_ids: ["poison_trap_1", "poison_trap_2"]
+  - id: "poison_valve"
+    type: "trap"
+    name: "毒气阀门"
+    position: [6, 4]
+    room_id: "room_d_lab"
+    is_hidden: false
+    detect_dc: 10
+    disarm_dc: 14
+    damage: "1d6"
+    damage_type: "poison"
+    save_dc: 13
+    trigger_radius: 2
+    status: "armed"
+    alias_ids: ["valve", "poison_valve"]
+  - id: "potion_tank"
+    type: "object"
+    name: "炼金药剂罐"
+    position: [7, 4]
+    room_id: "room_d_lab"
+    status: "unstable"
+    alias_ids: ["alchemical_tank", "potion_tank"]
+  - id: "door_b_to_c"
+    type: "door"
+    name: "隐藏书房侧门"
+    position: [8, 7]
+    is_open: false
+    is_locked: false
+    is_hidden: true
+    status: "hidden"
+    detect_dc: 14
+    connects_from: "room_b_corridor"
+    connects_to: "room_c_secret_study"
+    alias_ids: ["secret_study_door"]
+  - id: "cracked_wall"
+    type: "object"
+    name: "开裂的墙壁"
+    position: [8, 7]
+    status: "hidden"
+    is_hidden: true
+    room_id: "room_b_corridor"
+    alias_ids: ["hollow_wall", "secret_study_wall"]
+  - id: "chest_1"
+    type: "locked_chest"
+    name: "危害研究员的战利品箱"
+    position: [16, 2]
+    status: "open"
+    is_locked: false
+    unlock_dc: 14
+    inventory:
+      lab_key: 1
+      gold_coin: 25
+    alias_ids: ["study_chest"]
+  - id: "hazard_diary"
+    type: "readable"
+    name: "沾满血污的日记本"
+    position: [3, 3]
+    lore_id: "hazard_diary_1"
+    room_id: "room_c_secret_study"
+  - id: "chemical_notes"
+    type: "readable"
+    name: "化学残页"
+    position: [15, 4]
+    lore_id: "hazard_chemical_notes"
+    room_id: "room_c_secret_study"
+  - id: "iron_key_sketch"
+    type: "readable"
+    name: "重铁钥匙草图"
+    position: [16, 3]
+    lore_id: "hazard_iron_key_sketch"
+    room_id: "room_c_secret_study"
+spawns:
+  - prefab: "characters/gatekeeper.yaml"
+    instance_id: "gatekeeper"
+    position: [4, 9]
+    faction: "neutral"

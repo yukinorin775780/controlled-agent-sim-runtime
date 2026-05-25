@@ -1,0 +1,44 @@
+session:
+  id: hazard_lab_act3_study_companion_observations
+  map_id: hazard_lab
+  metadata:
+    tag: hazard_lab_v2_act3
+determinism:
+  strict: false
+  now_iso: ["2026-01-01T00:00:00+00:00"]
+  random_values: [0.5]
+steps:
+  - id: setup_study_entered
+    user_input: /flag act3_secret_study_entered true
+    expected:
+      state:
+        equals:
+          game_state.flags.act3_secret_study_entered: true
+  - id: observe_study
+    user_input: 队友们看看这间书房。
+    intent: chat
+    expected:
+      responses:
+        contains:
+          - 钥匙
+          - 危害
+          - 浪费
+      state:
+        equals:
+          game_state.pending_events: []
+          game_state.combat_active: false
+        contains:
+          game_state.journal_events:
+            - "[书房观察] scout -> practical_clues"
+            - "[书房观察] analyst -> necromancy_pollution"
+            - "[书房观察] tactician -> tactical_impatience"
+      visibility:
+        forbidden_paths:
+          - game_state.player_inventory.heavy_iron_key
+expected:
+  telemetry:
+    events_contains:
+      - event_name: actor_runtime_decision
+      - event_name: event_drain
+  budget:
+    max_total_tokens: 0

@@ -1,0 +1,45 @@
+session:
+  id: hazard_lab_poison_trap_triggered
+  map_id: hazard_lab
+  metadata:
+    tag: act2_poison_trap
+determinism:
+  strict: false
+  perf_counter: [0.0, 0.01, 0.02, 0.03, 0.04, 0.05]
+  now_iso: ["2026-01-01T00:00:00+00:00"]
+  randint: [12, 3, 4]
+  random_values: [0.5]
+steps:
+  - id: trigger_gas_trap_1
+    intent: INTERACT
+    payload:
+      target: gas_trap_1
+      source: trap_trigger
+    expected:
+      state:
+        equals:
+          game_state.flags.hazard_lab_poison_trap_triggered: true
+          game_state.environment_objects.gas_trap_1.status: triggered
+          game_state.entities.player.status_effects.0.type: poisoned
+          game_state.entities.player.status_effects.0.duration: 3
+        contains:
+          game_state.journal_events:
+            - "[毒气陷阱] gas_trap_1 triggered"
+  - id: repeat_trigger_does_not_duplicate_poison
+    intent: INTERACT
+    payload:
+      target: gas_trap_1
+      source: trap_trigger
+    expected:
+      state:
+        equals:
+          game_state.flags.hazard_lab_poison_trap_triggered: true
+          game_state.environment_objects.gas_trap_1.status: triggered
+          game_state.entities.player.status_effects.0.type: poisoned
+          game_state.entities.player.status_effects.0.duration: 3
+      visibility:
+        forbidden_paths:
+          - game_state.entities.player.status_effects.1
+expected:
+  budget:
+    max_total_tokens: 0

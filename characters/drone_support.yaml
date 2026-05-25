@@ -1,0 +1,46 @@
+name: "训练无人机萨满"
+race: "训练无人机"
+class: "萨满"
+level: 1
+ability_scores:
+  STR: 8
+  DEX: 12
+  CON: 10
+  INT: 10
+  WIS: 14
+  CHA: 10
+combat:
+  armor_class: 12
+  hit_points: 6
+  hit_dice: 2d6
+  speed: 30
+spells:
+  cantrips:
+    - sacred_flame
+  level_1:
+    - healing_word
+base_stats:
+  hp: 6
+  max_hp: 6
+  ac: 12
+  status: "alive"
+  faction: "hostile"
+  affection: 0
+  position: "camp_center"
+  x: 8
+  y: 4
+  enemy_type: "shaman"
+  spell_slots:
+    level_1: 1
+inventory:
+  - id: gold_coin
+    count: 2
+  - id: healing_potion
+    count: 1
+equipment:
+  - Rusty Dagger
+dialogue_style:
+  tone: "阴森、低语、依赖邪术援护同伴"
+dialogue_triggers: []
+quests: []
+attributes: {}

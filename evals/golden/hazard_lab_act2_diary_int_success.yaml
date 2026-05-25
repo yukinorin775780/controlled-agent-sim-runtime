@@ -1,0 +1,71 @@
+session:
+  id: hazard_lab_act2_diary_int_success
+  map_id: hazard_lab
+  metadata:
+    tag: content_sprint_1
+determinism:
+  strict: false
+  perf_counter: [0.0, 0.01, 0.02, 0.03, 0.04]
+  now_iso: ["2026-01-01T00:00:00+00:00"]
+  randint: [16]
+  choice_indices: [0]
+  random_values: [0.5]
+  llm:
+    dm:
+      - action_type: READ
+        difficulty_class: 0
+        reason: scripted_read_hazard_diary_success
+        is_probing_secret: false
+        responders: ["player"]
+        affection_changes: {}
+        flags_changed: {}
+        item_transfers: []
+        hp_changes: []
+        action_actor: player
+        action_target: hazard_diary
+steps:
+  - id: read_diary_success_branch
+    user_input: 用奥术知识阅读 hazard_diary。
+    intent: chat
+    expected:
+      state:
+        equals:
+          game_state.map_data.id: hazard_lab
+          game_state.flags.hazard_lab_diary_read: true
+          game_state.flags.hazard_lab_diary_decoded: true
+          game_state.flags.hazard_lab_antidote_formula_fragment_known.value: true
+          game_state.flags.hazard_lab_antidote_formula_fragment_known.visibility.scope: actor
+          game_state.flags.hazard_lab_key_hint_known.value: true
+          game_state.latest_roll.intent: READ
+          game_state.latest_roll.target: hazard_diary
+          game_state.latest_roll.skill: arcana
+          game_state.latest_roll.result.is_success: true
+          game_state.actor_runtime_state.player.memory_notes.0: 我读懂了：Gatekeeper 因实验药剂变得聪明但极不稳定，毒气陷阱会触发他的警觉，逃生关键是 heavy_iron_key。日记末尾写着“解药配方其实就在……”却被血迹打断。
+          game_state.actor_runtime_state.__party_shared__.memory_notes.0: 队伍确认：Gatekeeper、实验药剂、毒气陷阱与 heavy_iron_key 互相连接，钥匙是逃离实验室的关键。
+        contains:
+          game_state.journal_events:
+            - "🧠 [记忆] player 记录了一条私有记忆。"
+            - "🧠 [记忆] 队伍共享记忆新增了一条线索。"
+      visibility:
+        forbidden_paths:
+          - environment_objects.gas_trap_1
+      telemetry:
+        events_contains:
+          - event_name: event_drain
+            payload:
+              event_count: 2
+              transaction_event_count: 0
+          - event_name: turn_finished
+            payload:
+              intent: chat
+              success: true
+expected:
+  telemetry:
+    events_contains:
+      - event_name: event_drain
+        payload:
+          event_count: 2
+  retrieval:
+    max_hits: 4
+  budget:
+    max_total_tokens: 0

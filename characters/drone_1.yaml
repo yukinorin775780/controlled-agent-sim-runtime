@@ -1,0 +1,52 @@
+name: "训练无人机"
+race: "训练无人机"
+class: "战士"
+level: 1
+ability_scores:
+  STR: 8
+  DEX: 14
+  CON: 10
+  INT: 10
+  WIS: 8
+  CHA: 8
+personality:
+  traits:
+    - "神经紧绷"
+    - "充满敌意"
+    - "欺软怕硬"
+  ideals: "先下手为强，活着回去领赏。"
+  bonds: "巡逻队和营地警戒。"
+  flaws: "一旦受伤就会惊慌失措。"
+background:
+  type: "Drone Patrol"
+  description: "一名在营地附近游荡警戒的训练无人机，眼神里满是戒备和恶意。"
+combat:
+  armor_class: 15
+  hit_points: 7
+  hit_dice: 2d6
+  speed: 30
+  proficiency_bonus: 2
+base_stats:
+  hp: 7
+  max_hp: 7
+  ac: 15
+  status: "alive"
+  faction: "hostile"
+  affection: 0
+  position: "camp_center"
+inventory:
+  - id: gold_coin
+    count: 5
+  - id: scimitar
+    count: 1
+equipment:
+  - Scimitar
+dialogue_style:
+  tone: "尖利、戒备、充满恶意"
+  common_phrases:
+    - "咔嘶"
+    - "站住"
+    - "入侵者"
+dialogue_triggers: []
+quests: []
+attributes: {}

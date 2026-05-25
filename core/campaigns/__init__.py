@@ -1,0 +1,43 @@
+"""Campaign-specific deterministic orchestration helpers."""
+
+from core.campaigns.hazard_lab import (
+    ACT3_CHOICE_REBUKE_SCOUT,
+    ACT3_CHOICE_SIDE_WITH_SCOUT,
+    ACT4_POST_COMBAT_BANTER,
+    detect_scout_memory_echo_context,
+    detect_diary_negotiation_context,
+    detect_gatekeeper_boss_intro_context,
+    detect_gatekeeper_boss_resolution_context,
+    detect_gatekeeper_boss_strategy_context,
+    detect_gatekeeper_mercy_context,
+    detect_key_guidance_context,
+    detect_lab_act3_choice,
+    detect_lab_act4_post_combat_banter,
+    detect_lab_intro_awareness,
+    detect_poison_trap_trigger_context,
+    detect_secret_study_entry_context,
+    detect_secret_study_observation_context,
+    detect_study_chest_loot_context,
+    detect_trap_awareness_context,
+)
+
+__all__ = [
+    "ACT3_CHOICE_REBUKE_SCOUT",
+    "ACT3_CHOICE_SIDE_WITH_SCOUT",
+    "ACT4_POST_COMBAT_BANTER",
+    "detect_scout_memory_echo_context",
+    "detect_diary_negotiation_context",
+    "detect_gatekeeper_boss_intro_context",
+    "detect_gatekeeper_boss_resolution_context",
+    "detect_gatekeeper_boss_strategy_context",
+    "detect_gatekeeper_mercy_context",
+    "detect_key_guidance_context",
+    "detect_lab_act3_choice",
+    "detect_lab_act4_post_combat_banter",
+    "detect_lab_intro_awareness",
+    "detect_poison_trap_trigger_context",
+    "detect_secret_study_entry_context",
+    "detect_secret_study_observation_context",
+    "detect_study_chest_loot_context",
+    "detect_trap_awareness_context",
+]

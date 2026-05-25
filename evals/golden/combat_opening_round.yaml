@@ -1,0 +1,22 @@
+session:
+  id: combat_opening_round
+  map_id: hazard_lab
+  metadata:
+    tag: smoke
+determinism:
+  strict: false
+  perf_counter: [0.0, 0.01, 0.02, 0.03]
+  now_iso: ["2026-01-01T00:00:00+00:00"]
+  randint: [15]
+  choice_indices: [0]
+  random_values: [0.2]
+  llm: {}
+steps:
+  - id: background_tick
+    user_input: ""
+    intent: background_step
+expected:
+  retrieval:
+    max_hits: 0
+  budget:
+    max_total_tokens: 0

@@ -1,0 +1,17 @@
+name: "Feral Drone"
+race: "Drone"
+class: "Fighter"
+hp: 12
+max_hp: 12
+faction: "enemy"
+template_path: "prompts/hostile_npc_template.j2"
+attributes:
+  ability_scores:
+    STR: 12
+    DEX: 14
+    CON: 10
+    INT: 6
+    WIS: 8
+    CHA: 6
+inventory:
+  - "rusty_scimitar"

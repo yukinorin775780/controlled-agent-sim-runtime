@@ -1,0 +1,15 @@
+{
+    "name": "Tav",
+    "race": "Human",
+    "class": "Bard",
+    "level": 1,
+    "ability_scores": {
+      "STR": 10,
+      "DEX": 14,
+      "CON": 12,
+      "INT": 12,
+      "WIS": 10,
+      "CHA": 16
+    },
+    "flags": []
+  }

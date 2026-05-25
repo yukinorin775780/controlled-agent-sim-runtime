@@ -1,0 +1,99 @@
+session:
+  id: background_reflection_after_conflict
+  map_id: hazard_lab
+  metadata:
+    tag: narrative_loop
+determinism:
+  strict: false
+  perf_counter: [0.0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06]
+  now_iso: ["2026-01-01T00:00:00+00:00"]
+  randint: [12, 12]
+  choice_indices: [0]
+  random_values: [0.5]
+  llm:
+    dm:
+      - action_type: CHAT
+        difficulty_class: 0
+        reason: scripted_background_reflection_after_conflict
+        is_probing_secret: false
+        responders: ["tactician"]
+        affection_changes: {}
+        flags_changed: {}
+        item_transfers: []
+        hp_changes: []
+        action_actor: player
+        action_target: tactician
+steps:
+  - id: conflict_runtime_turn
+    user_input: 你们刚才冲突背后的真相是什么？
+    intent: chat
+    expected:
+      state:
+        equals:
+          game_state.actor_invocation_mode: runtime
+          game_state.actor_invocation_reason: runtime_enabled
+          game_state.last_actor_decision.actor_id: tactician
+          game_state.reflection_queue.0.actor_id: tactician
+          game_state.reflection_queue.0.reason: sensitive_topic_triggered
+      visibility:
+        required_paths:
+          - game_state.reflection_queue.0.actor_id
+      telemetry:
+        events_contains:
+          - event_name: actor_runtime_decision
+            payload:
+              actor_id: tactician
+          - event_name: memory_retrieval
+            payload:
+              mode: actor
+              actor_id: tactician
+          - event_name: reflection_enqueued
+            payload:
+              actor_id: tactician
+              count: 1
+          - event_name: event_drain
+            payload:
+              event_count: 1
+  - id: process_reflections
+    user_input: ""
+    intent: process_reflections
+    expected:
+      state:
+        contains:
+          game_state.actor_runtime_state.tactician.beliefs: ["tactician 在反思中记录：sensitive_topic_triggered"]
+      visibility:
+        forbidden_paths: ["game_state.reflection_queue.0"]
+      telemetry:
+        events_contains:
+          - event_name: reflection_processed
+            payload:
+              actor_id: tactician
+              status: processed
+              skip_reason: ""
+          - event_name: event_drain
+            payload:
+              event_count: 2
+        events_not_contains:
+          - event_name: reflection_processed
+            payload:
+              actor_id: tactician
+              status: skipped
+              skip_reason: runtime_missing
+expected:
+  telemetry:
+    events_contains:
+      - event_name: reflection_processed
+        payload:
+          actor_id: tactician
+          status: processed
+          skip_reason: ""
+    events_not_contains:
+      - event_name: reflection_processed
+        payload:
+          actor_id: tactician
+          status: skipped
+          skip_reason: runtime_missing
+  retrieval:
+    max_hits: 3
+  budget:
+    max_total_tokens: 0

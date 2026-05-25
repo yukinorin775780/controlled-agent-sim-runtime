@@ -1,0 +1,50 @@
+session:
+  id: hazard_lab_act2_corridor_door_lockpick_success_skips_study
+  map_id: hazard_lab
+  metadata:
+    tag: act2_poison_corridor
+determinism:
+  strict: false
+  perf_counter: [0.0, 0.01, 0.02, 0.03, 0.04, 0.05]
+  now_iso: ["2026-01-01T00:00:00+00:00"]
+  randint: [18]
+  random_values: [0.5]
+steps:
+  - id: move_to_lab_door
+    user_input: 移动到 4,8
+    intent: MOVE
+    payload:
+      target: "4,8"
+    expected:
+      state:
+        equals:
+          game_state.entities.player.x: 4
+          game_state.entities.player.y: 8
+  - id: force_lockpick_success
+    user_input: /flag hazard_lab_force_lockpick_success true
+    expected:
+      state:
+        equals:
+          game_state.flags.hazard_lab_force_lockpick_success: true
+  - id: lockpick_lab_door_success
+    user_input: 撬锁实验室门。
+    intent: UNLOCK
+    payload:
+      target: door_b_to_d
+    expected:
+      state:
+        equals:
+          game_state.flags.act2_corridor_exit_door_inspected: true
+          game_state.flags.act2_corridor_exit_requires_key: true
+          game_state.flags.act2_corridor_exit_lockpick_attempted: true
+          game_state.flags.act2_corridor_exit_lockpick_success: true
+          game_state.flags.act2_lockpick_success_route_to_boss: true
+          game_state.entities.door_b_to_d.is_open: true
+          game_state.entities.door_b_to_d.is_locked: false
+      visibility:
+        forbidden_paths:
+          - game_state.flags.hazard_lab_diary_decoded
+          - game_state.flags.hazard_lab_gatekeeper_truth_pressure
+expected:
+  budget:
+    max_total_tokens: 0

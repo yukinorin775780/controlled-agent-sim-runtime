@@ -1,0 +1,29 @@
+name: "Gatekeeper"
+race: "Human"
+class: "Altered Lab Guard"
+hp: 18
+max_hp: 18
+faction: "neutral"
+template_path: "prompts/hostile_npc_template.j2"
+attributes:
+  ability_scores:
+    STR: 8
+    DEX: 14
+    CON: 12
+    INT: 16
+    WIS: 10
+    CHA: 8
+  personality:
+    traits:
+      - "Arrogant and overconfident because the experiment changed how quickly he thinks."
+      - "Protects the exit key because he believes the lab still needs a guard."
+      - "Panics when confronted with evidence that he was an experiment, not a trusted operator."
+  secret_objective: "Guard the heavy iron key and keep the poison valve armed unless pressure or truth breaks his confidence."
+dynamic_states:
+  patience:
+    current_value: 15
+  fear:
+    current_value: 5
+inventory:
+  - "heavy_iron_key"
+  - "scroll_of_firebolt"

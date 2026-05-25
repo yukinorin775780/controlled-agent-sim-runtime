@@ -1,0 +1,22 @@
+session:
+  id: world_flag_reveal
+  map_id: hazard_lab
+  metadata:
+    tag: smoke
+determinism:
+  strict: false
+  perf_counter: [0.0, 0.01, 0.02]
+  now_iso: ["2026-01-01T00:00:00+00:00"]
+  randint: [12]
+  choice_indices: [0]
+  random_values: [0.6]
+  llm: {}
+steps:
+  - id: init_sync
+    user_input: ""
+    intent: init_sync
+expected:
+  retrieval:
+    max_hits: 0
+  budget:
+    max_total_tokens: 0

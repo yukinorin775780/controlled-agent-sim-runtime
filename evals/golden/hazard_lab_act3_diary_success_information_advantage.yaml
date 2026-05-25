@@ -1,0 +1,53 @@
+session:
+  id: hazard_lab_act3_diary_success_information_advantage
+  map_id: hazard_lab
+  metadata:
+    tag: hazard_lab_v2_act3
+determinism:
+  strict: false
+  now_iso: ["2026-01-01T00:00:00+00:00"]
+  randint: [16]
+  random_values: [0.5]
+steps:
+  - id: setup_study_entered
+    user_input: /flag act3_secret_study_entered true
+    expected:
+      state:
+        equals:
+          game_state.flags.act3_secret_study_entered: true
+  - id: read_diary_success
+    user_input: 用奥术知识阅读 hazard_diary。
+    intent: chat
+    expected:
+      state:
+        equals:
+          game_state.flags.act3_diary_read: true
+          game_state.flags.act3_diary_decoded: true
+          game_state.flags.act3_gatekeeper_potion_truth_known: true
+          game_state.flags.act3_heavy_key_hint_known: true
+          game_state.flags.act3_party_knows_gatekeeper_truth: true
+          game_state.flags.hazard_lab_diary_read: true
+          game_state.flags.hazard_lab_diary_decoded: true
+        contains:
+          game_state.actor_runtime_state.player.memory_notes:
+            - "我读懂了：Gatekeeper 因实验药剂变得聪明但极不稳定，毒气陷阱会触发他的警觉，逃生关键是 heavy_iron_key。日记末尾写着“解药配方其实就在……”却被血迹打断。"
+          game_state.actor_runtime_state.__party_shared__.memory_notes:
+            - "队伍确认：Gatekeeper、实验药剂、毒气陷阱与 heavy_iron_key 互相连接，钥匙是逃离实验室的关键。"
+          game_state.journal_events:
+            - "[目标更新] 找到 Gatekeeper。他持有重铁钥匙，并且知道毒气防线的真相。"
+  - id: pressure_gatekeeper_with_diary_truth
+    user_input: 日记里写了 Gatekeeper 喝下危害狂暴灵药，钥匙和毒气真相都和这件事有关。
+    intent: chat
+    expected:
+      state:
+        equals:
+          game_state.flags.hazard_lab_gatekeeper_truth_pressure: true
+        contains:
+          game_state.journal_events:
+            - "[交涉筹码] diary_evidence -> gatekeeper_elixir_truth"
+expected:
+  telemetry:
+    events_contains:
+      - event_name: event_drain
+  budget:
+    max_total_tokens: 0

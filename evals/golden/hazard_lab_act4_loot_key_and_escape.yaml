@@ -1,0 +1,137 @@
+session:
+  id: hazard_lab_act4_loot_key_and_escape
+  map_id: hazard_lab
+  metadata:
+    tag: content_sprint_1
+determinism:
+  strict: false
+  perf_counter: [0.0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08]
+  now_iso: ["2026-01-01T00:00:00+00:00"]
+  randint: [12, 12, 12]
+  choice_indices: [0]
+  random_values: [0.5]
+  llm:
+    dm:
+      - action_type: DIALOGUE_REPLY
+        difficulty_class: 0
+        reason: scripted_act4_post_combat_banter
+        is_probing_secret: false
+        responders: ["gatekeeper"]
+        affection_changes: {}
+        flags_changed: {}
+        item_transfers: []
+        hp_changes: []
+        action_actor: player
+        action_target: gatekeeper
+      - action_type: MOVE
+        difficulty_class: 0
+        reason: scripted_act4_approach_heavy_oak_door
+        is_probing_secret: false
+        responders: ["player"]
+        affection_changes: {}
+        flags_changed: {}
+        item_transfers: []
+        hp_changes: []
+        action_actor: player
+        action_target: 17,4
+      - action_type: INTERACT
+        difficulty_class: 0
+        reason: scripted_act4_open_heavy_oak_door
+        is_probing_secret: false
+        responders: ["player"]
+        affection_changes: {}
+        flags_changed: {}
+        item_transfers: []
+        hp_changes: []
+        action_actor: player
+        action_target: heavy_oak_door_1
+    generation:
+      - 玩家贴着墙边向出口移动，脚步在石板上发出回响。
+      - 沉重橡木门在钥匙扭动后缓缓打开，通路终于显现。
+steps:
+  - id: mark_gatekeeper_defeated_for_act4
+    user_input: /flag world_hazard_lab_gatekeeper_defeated true
+    intent: chat
+    expected:
+      state:
+        equals:
+          game_state.flags.world_hazard_lab_gatekeeper_defeated: true
+  - id: loot_gatekeeper_key_via_ui_action_and_event_drain
+    user_input: loot gatekeeper
+    intent: ui_action_loot
+    character: player
+    expected:
+      state:
+        equals:
+          game_state.map_data.id: hazard_lab
+          game_state.player_inventory.heavy_iron_key: 1
+          game_state.entities.gatekeeper.status: dead
+          game_state.flags.hazard_lab_gatekeeper_key_looted: true
+          game_state.pending_events: []
+      visibility:
+        forbidden_paths:
+          - game_state.entities.gatekeeper.inventory.heavy_iron_key
+      telemetry:
+        events_contains:
+          - event_name: event_drain
+            payload:
+              transaction_event_count: 1
+  - id: trigger_post_combat_party_banter
+    user_input: 钥匙到手了，快离开这里。
+    intent: chat
+    expected:
+      responses:
+        exact:
+          - speaker: scout
+            text: 别误会，我只是想离开这鬼地方。
+          - speaker: analyst
+            text: 危害气息淡了些，但别松懈。我们先离开这里。
+          - speaker: tactician
+            text: 废话够了。开门，继续前进。
+      state:
+        equals:
+          game_state.actor_invocation_mode: runtime
+          game_state.actor_invocation_reason: party_turn_runtime_multi
+          game_state.flags.hazard_lab_post_combat_banter_done: true
+        contains:
+          game_state.actor_runtime_state.scout.memory_notes:
+            - 玩家曾当众压我一头，但钥匙到手后我依旧选择推进撤离。
+      telemetry:
+        events_contains:
+          - event_name: actor_runtime_decision
+            payload:
+              reason: party_turn_runtime_multi
+          - event_name: event_drain
+            payload:
+              event_count: 6
+  - id: move_to_heavy_oak_door
+    user_input: 移动到 17,4。
+    intent: chat
+    expected:
+      state:
+        equals:
+          game_state.entities.player.x: 17
+          game_state.entities.player.y: 4
+  - id: open_heavy_oak_door_and_finish_demo
+    user_input: 用 heavy_iron_key 打开 heavy_oak_door_1。
+    intent: chat
+    expected:
+      state:
+        equals:
+          game_state.entities.heavy_oak_door_1.is_open: true
+          game_state.demo_cleared: true
+          game_state.flags.hazard_lab_escape_complete: true
+          game_state.flags.content_sprint_1_complete: true
+expected:
+  telemetry:
+    events_contains:
+      - event_name: event_drain
+        payload:
+          transaction_event_count: 1
+      - event_name: actor_runtime_decision
+        payload:
+          reason: party_turn_runtime_multi
+  retrieval:
+    max_hits: 8
+  budget:
+    max_total_tokens: 0

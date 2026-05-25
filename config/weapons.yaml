@@ -1,0 +1,83 @@
+# Weapon Database - Combat equipment data
+# 武器数据库 - 从普通物品表拆分出的战斗装备
+
+weapons:
+  rusty_dagger:
+    name: "生锈匕首"
+    description: "一把刀刃有锈迹的旧匕首，胜在还能用。"
+    aliases:
+      - "Dagger"
+      - "dagger"
+      - "匕首"
+    type: "weapon"
+    stackable: false
+    weight: 1.0
+    equip_slot: "main_hand"
+    damage_dice: "1d4"
+    damage_bonus: 0
+    range: 1
+    damage_type: "piercing"
+    weapon_type: "melee"
+
+  scimitar:
+    name: "弯刀"
+    description: "一把轻巧锋利的弯刀，常见于训练无人机与匪徒手中。"
+    aliases:
+      - "Scimitar"
+    type: "weapon"
+    stackable: false
+    weight: 3.0
+    equip_slot: "main_hand"
+    damage_dice: "1d6"
+    damage_bonus: 0
+    range: 1
+    damage_type: "slashing"
+    weapon_type: "melee"
+
+  mace:
+    name: "钉头锤"
+    description: "一把结实的钉头锤，适合近战。"
+    aliases:
+      - "Mace"
+    type: "weapon"
+    stackable: false
+    weight: 4.0
+    equip_slot: "main_hand"
+    damage_dice: "1d6"
+    damage_bonus: 0
+    range: 1
+    damage_type: "bludgeoning"
+    weapon_type: "melee"
+
+  shortbow:
+    name: "短弓"
+    description: "一张轻便短弓，适合中距离射击。"
+    aliases:
+      - "Shortbow"
+    type: "weapon"
+    stackable: false
+    weight: 2.0
+    equip_slot: "ranged"
+    damage_dice: "1d6"
+    damage_bonus: 0
+    range: 15
+    damage_type: "piercing"
+    weapon_type: "ranged"
+
+  crossbow:
+    name: "轻弩"
+    description: "装填缓慢但威力稳定的轻弩。"
+    aliases:
+      - "Crossbow"
+      - "Light Crossbow"
+      - "轻弩"
+      - "弩"
+    type: "weapon"
+    stackable: false
+    weight: 5.0
+    equip_slot: "ranged"
+    damage_dice: "1d8"
+    damage_bonus: 0
+    range: 16
+    damage_type: "piercing"
+    weapon_type: "ranged"

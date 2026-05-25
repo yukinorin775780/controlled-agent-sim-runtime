@@ -1,0 +1,66 @@
+session:
+  id: hazard_lab_act2_diary_int_failure
+  map_id: hazard_lab
+  metadata:
+    tag: content_sprint_1
+determinism:
+  strict: false
+  perf_counter: [0.0, 0.01, 0.02, 0.03]
+  now_iso: ["2026-01-01T00:00:00+00:00"]
+  randint: [6]
+  choice_indices: [0]
+  random_values: [0.5]
+  llm:
+    dm:
+      - action_type: READ
+        difficulty_class: 0
+        reason: scripted_read_hazard_diary_failure
+        is_probing_secret: false
+        responders: ["player"]
+        affection_changes: {}
+        flags_changed: {}
+        item_transfers: []
+        hp_changes: []
+        action_actor: player
+        action_target: hazard_diary
+steps:
+  - id: read_diary_failure_branch
+    user_input: 阅读 hazard_diary。
+    intent: chat
+    expected:
+      state:
+        equals:
+          game_state.map_data.id: hazard_lab
+          game_state.flags.hazard_lab_diary_read: true
+          game_state.flags.hazard_lab_diary_decoded: false
+          game_state.latest_roll.intent: READ
+          game_state.latest_roll.target: hazard_diary
+          game_state.latest_roll.skill: intelligence
+          game_state.latest_roll.result.is_success: false
+          game_state.actor_runtime_state.player.memory_notes.0: 我只辨认出碎片词句：训练无人机、箱子、毒气，没法拼出完整线索。
+      visibility:
+        forbidden_paths:
+          - game_state.flags.hazard_lab_antidote_formula_fragment_known
+          - game_state.flags.hazard_lab_key_hint_known
+          - game_state.actor_runtime_state.__party_shared__
+          - environment_objects.gas_trap_1
+      telemetry:
+        events_contains:
+          - event_name: event_drain
+            payload:
+              event_count: 1
+              transaction_event_count: 0
+          - event_name: turn_finished
+            payload:
+              intent: chat
+              success: true
+expected:
+  telemetry:
+    events_contains:
+      - event_name: event_drain
+        payload:
+          event_count: 1
+  retrieval:
+    max_hits: 4
+  budget:
+    max_total_tokens: 0

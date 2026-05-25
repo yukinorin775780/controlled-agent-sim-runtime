@@ -1,0 +1,87 @@
+session:
+  id: scout_runtime_isolation
+  map_id: hazard_lab
+  metadata:
+    tag: hardening
+determinism:
+  strict: false
+  perf_counter: [0.0, 0.01, 0.02, 0.03, 0.04, 0.05]
+  now_iso: ["2026-01-01T00:00:00+00:00"]
+  randint: [11, 11]
+  choice_indices: [0]
+  random_values: [0.5]
+  llm:
+    dm:
+      - action_type: CHAT
+        difficulty_class: 0
+        reason: scripted_scout_runtime_isolation
+        is_probing_secret: false
+        responders: ["scout"]
+        affection_changes: {}
+        flags_changed: {}
+        item_transfers: []
+        hp_changes: []
+        action_actor: player
+        action_target: scout
+steps:
+  - id: scout_runtime_turn
+    user_input: 继续。
+    intent: chat
+    expected:
+      responses:
+        contains: ["我听见了。继续。"]
+        not_contains: ["private_relic", "Protect the artifact."]
+      state:
+        equals:
+          game_state.actor_invocation_mode: runtime
+          game_state.last_actor_decision.actor_id: scout
+          game_state.last_actor_decision.kind: speak
+          game_state.final_response: 我听见了。继续。
+          game_state.pending_events: []
+      telemetry:
+        events_contains:
+          - event_name: actor_runtime_decision
+            payload:
+              actor_id: scout
+          - event_name: memory_retrieval
+            payload:
+              mode: actor
+              actor_id: scout
+          - event_name: event_drain
+            payload:
+              event_count: 1
+        events_not_contains:
+          - event_name: actor_runtime_decision
+            payload:
+              actor_id: scout
+              mode: fallback
+          - event_name: memory_retrieval
+            payload:
+              mode: actor
+              actor_id: analyst
+expected:
+  telemetry:
+    events_contains:
+      - event_name: actor_runtime_decision
+        payload:
+          actor_id: scout
+      - event_name: memory_retrieval
+        payload:
+          mode: actor
+          actor_id: scout
+      - event_name: event_drain
+        payload:
+          event_count: 1
+    events_not_contains:
+      - event_name: actor_runtime_decision
+        payload:
+          actor_id: scout
+          mode: fallback
+      - event_name: memory_retrieval
+        payload:
+          mode: actor
+          actor_id: analyst
+  retrieval:
+    max_hits: 2
+  budget:
+    max_total_tokens: 0

@@ -1,0 +1,76 @@
+session:
+  id: hazard_lab_act2_disarm_trap_success
+  map_id: hazard_lab
+  metadata:
+    tag: act2_poison_corridor
+determinism:
+  strict: false
+  perf_counter: [0.0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06]
+  now_iso: ["2026-01-01T00:00:00+00:00"]
+  randint: [12, 12, 12]
+  random_values: [0.5]
+steps:
+  - id: open_ab_door
+    user_input: 打开 A-B 门。
+    intent: INTERACT
+    payload:
+      target: door_a_to_b
+    expected:
+      state:
+        equals:
+          environment_objects.door_a_to_b.status: open
+          environment_objects.door_a_to_b.is_open: true
+  - id: approach_trap_marker
+    user_input: 走到走廊里的可疑地砖附近。
+    intent: MOVE
+    payload:
+      target: "5,12"
+    expected:
+      state:
+        equals:
+          game_state.entities.player.x: 5
+          game_state.entities.player.y: 12
+  - id: reveal_trap
+    user_input: 走廊里有什么不对劲吗？
+    intent: chat
+    expected:
+      state:
+        equals:
+          game_state.flags.act2_gas_trap_revealed: true
+  - id: scout_disarms_trap
+    user_input: 侦察员，解除陷阱。
+    intent: chat
+    expected:
+      state:
+        equals:
+          game_state.flags.act2_scout_ordered_to_disarm: true
+          game_state.flags.act2_disarm_actor: scout
+          game_state.flags.act2_disarm_attempted: true
+          game_state.flags.act2_disarm_success: true
+          game_state.flags.act2_gas_trap_disarmed: true
+          game_state.flags.hazard_lab_poison_trap_disarmed: true
+          game_state.environment_objects.gas_trap_1.status: disabled
+          game_state.pending_events: []
+        contains:
+          game_state.journal_events:
+            - "[陷阱解除] scout -> gas_trap_1"
+      visibility:
+        forbidden_paths:
+          - game_state.entities.gas_trap_1
+  - id: disabled_trap_does_not_trigger
+    intent: INTERACT
+    payload:
+      target: gas_trap_1
+      source: trap_trigger
+    expected:
+      state:
+        equals:
+          game_state.flags.act2_gas_trap_disarmed: true
+          game_state.environment_objects.gas_trap_1.status: disabled
+        visibility:
+          forbidden_paths:
+            - game_state.flags.act2_gas_trap_triggered
+            - game_state.flags.hazard_lab_poison_trap_triggered
+expected:
+  budget:
+    max_total_tokens: 0

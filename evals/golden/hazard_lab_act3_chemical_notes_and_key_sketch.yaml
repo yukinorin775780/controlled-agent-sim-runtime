@@ -1,0 +1,49 @@
+session:
+  id: hazard_lab_act3_chemical_notes_and_key_sketch
+  map_id: hazard_lab
+  metadata:
+    tag: hazard_lab_v2_act3
+determinism:
+  strict: false
+  now_iso: ["2026-01-01T00:00:00+00:00"]
+  random_values: [0.5]
+steps:
+  - id: setup_study_entered
+    user_input: /flag act3_secret_study_entered true
+    expected:
+      state:
+        equals:
+          game_state.flags.act3_secret_study_entered: true
+  - id: read_chemical_notes
+    user_input: 阅读 chemical_notes。
+    intent: READ
+    payload:
+      target: chemical_notes
+    expected:
+      state:
+        equals:
+          game_state.flags.act3_chemical_notes_seen: true
+          game_state.flags.act3_diary_context_gathered: true
+          game_state.flags.act3_diary_context_bonus: 10
+        contains:
+          game_state.journal_events:
+            - "[书房观察] analyst -> necromancy_pollution"
+            - "[线索整合] chemical_notes -> diary_context"
+  - id: read_iron_key_sketch
+    user_input: 阅读 iron_key_sketch。
+    intent: READ
+    payload:
+      target: iron_key_sketch
+    expected:
+      state:
+        equals:
+          game_state.flags.act3_key_sketch_seen: true
+          game_state.flags.act3_heavy_key_hint_known: true
+          game_state.flags.act3_diary_context_gathered: true
+        contains:
+          game_state.journal_events:
+            - "[书房观察] scout -> practical_clues"
+            - "[线索整合] iron_key_sketch -> diary_context"
+expected:
+  budget:
+    max_total_tokens: 0

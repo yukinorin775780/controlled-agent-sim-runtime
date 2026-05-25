@@ -1,0 +1,124 @@
+session:
+  id: hazard_lab_gatekeeper_key_path
+  map_id: hazard_lab
+  metadata:
+    tag: content_sprint_1
+determinism:
+  strict: false
+  perf_counter: [0.0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06]
+  now_iso: ["2026-01-01T00:00:00+00:00"]
+  randint: [12, 12, 12]
+  choice_indices: [0]
+  random_values: [0.5]
+  llm:
+    dm:
+      - action_type: START_DIALOGUE
+        difficulty_class: 0
+        reason: scripted_hazard_lab_start_dialogue
+        is_probing_secret: false
+        responders: ["gatekeeper"]
+        affection_changes: {}
+        flags_changed: {}
+        item_transfers: []
+        hp_changes: []
+        action_actor: player
+        action_target: gatekeeper
+      - action_type: DIALOGUE_REPLY
+        difficulty_class: 0
+        reason: scripted_hazard_lab_dialogue_reply
+        is_probing_secret: false
+        responders: ["gatekeeper"]
+        affection_changes: {}
+        flags_changed: {}
+        item_transfers: []
+        hp_changes: []
+        action_actor: player
+        action_target: gatekeeper
+      - action_type: MOVE
+        difficulty_class: 0
+        reason: scripted_hazard_lab_approach_door
+        is_probing_secret: false
+        responders: ["player"]
+        affection_changes: {}
+        flags_changed: {}
+        item_transfers: []
+        hp_changes: []
+        action_actor: player
+        action_target: 17,4
+      - action_type: INTERACT
+        difficulty_class: 0
+        reason: scripted_hazard_lab_open_door_after_approach
+        is_probing_secret: false
+        responders: ["player"]
+        affection_changes: {}
+        flags_changed: {}
+        item_transfers: []
+        hp_changes: []
+        action_actor: player
+        action_target: heavy_oak_door_1
+    generation:
+      - >-
+        {"internal_monologue":"","reply":"拿去吧，别烦我。","trigger_combat":false,
+        "state_changes":{"patience_delta":0,"fear_delta":0},
+        "physical_action":{"action_type":"transfer_item","source_id":"gatekeeper","target_id":"player",
+        "item_id":"heavy_iron_key","count":1}}
+      - 玩家贴着墙边靠近了大门，铁锁在钥匙孔里发出轻响。
+      - 沉重橡木门被钥匙解开，门轴轰鸣，通路终于打开。
+steps:
+  - id: start_dialogue_in_hazard_lab
+    user_input: 我想和守门人谈谈。
+    intent: chat
+    expected:
+      state:
+        equals:
+          game_state.map_data.id: hazard_lab
+          game_state.active_dialogue_target: gatekeeper
+  - id: negotiate_gatekeeper_for_key_via_event_drain
+    user_input: 把钥匙给我。
+    intent: chat
+    expected:
+      responses:
+        exact:
+          - speaker: gatekeeper
+            text: 拿去吧，别烦我。
+      state:
+        equals:
+          game_state.map_data.id: hazard_lab
+          game_state.player_inventory.heavy_iron_key: 1
+          game_state.entities.gatekeeper.inventory.scroll_of_firebolt: 1
+          game_state.pending_events: []
+      telemetry:
+        events_contains:
+          - event_name: event_drain
+            payload:
+              event_count: 1
+              transaction_event_count: 1
+              transaction_accepted_count: 1
+  - id: approach_heavy_oak_door
+    user_input: 移动到 17,4。
+    intent: chat
+    expected:
+      state:
+        equals:
+          game_state.map_data.id: hazard_lab
+          game_state.entities.player.x: 17
+          game_state.entities.player.y: 4
+  - id: open_heavy_oak_door_and_clear_demo
+    user_input: 用 heavy_iron_key 打开 heavy_oak_door_1。
+    intent: chat
+    expected:
+      state:
+        equals:
+          game_state.map_data.id: hazard_lab
+          game_state.entities.heavy_oak_door_1.is_open: true
+          game_state.demo_cleared: true
+expected:
+  telemetry:
+    events_contains:
+      - event_name: event_drain
+        payload:
+          transaction_event_count: 1
+  retrieval:
+    max_hits: 4
+  budget:
+    max_total_tokens: 0

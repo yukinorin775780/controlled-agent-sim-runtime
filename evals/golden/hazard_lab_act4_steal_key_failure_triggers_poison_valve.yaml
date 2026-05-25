@@ -1,0 +1,32 @@
+session:
+  id: hazard_lab_act4_steal_key_failure_triggers_poison_valve
+  map_id: hazard_lab
+determinism:
+  strict: false
+  perf_counter: [0.0, 0.01, 0.02, 0.03, 0.04, 0.05]
+  now_iso: ["2026-01-01T00:00:00+00:00"]
+  randint: [12, 12]
+  choice_indices: [0]
+  random_values: [0.5]
+  llm:
+    generation:
+      - 毒雾从阀门里涌出，局面立刻变坏。
+steps:
+  - id: force_failure
+    user_input: /flag hazard_lab_force_steal_key_failure true
+    intent: chat
+  - id: scout_steal_fails
+    user_input: Scout, steal the key.
+    intent: chat
+    expected:
+      state:
+        equals:
+          game_state.flags.act4_scout_steal_key_success: false
+          game_state.flags.act4_poison_valve_triggered: true
+          game_state.flags.act4_lab_poison_leak: true
+          game_state.entities.gatekeeper.faction: hostile
+          game_state.entities.player.status_effects.0.type: poisoned
+        contains:
+          game_state.journal_events:
+            - "[偷钥匙失败] scout -> gatekeeper_alerted"
+            - "[毒气泄漏] poison_valve -> lab_poison"
